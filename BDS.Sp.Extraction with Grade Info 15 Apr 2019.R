@@ -32,7 +32,9 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
       readLines(con = stdin(), n = 1)
   }
 
+  library(JRWToolBox)    
 
+	
 # ------------------------------------------------------
 
  # Ask for User ID and password
