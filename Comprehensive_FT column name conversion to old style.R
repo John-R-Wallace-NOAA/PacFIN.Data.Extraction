@@ -1,10 +1,17 @@
-    
+ 
+library(JRWToolBox)
+  
+# This file can be downloaded to your working directory and viewed in R with: 
+ JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Comprehensive_FT column name conversion to old style.R', type = "script", show = TRUE)
+
+# Use show = FALSE to download but not view in R.
+ 
+
 # Same column name: FTID (so no need to convert);
 # 'RWT_LBS' historically converted to 'CATCH.LBS' in the SQL code, so here 'ROUND_WEIGHT_LBS' is converted to 'CATCH.LBS'
 # It appears that 'PRODUCT_FROM' in vdrfd was meant to be 'PRODUCT_FORM'
 # vdrfd PRMTLST (One or more NWR/LE permits under which the vessel fished) doesn't appear to have a cooresponding column in the Comprehensive_FT table
 
-library(JRWToolBox)    
 nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
 
                       Comp_FT                               vdrfd
