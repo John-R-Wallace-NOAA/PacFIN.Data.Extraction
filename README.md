@@ -7,3 +7,10 @@ You will need my toolbox installed: https://github.com/John-R-Wallace/JRWToolBox
 You will also need ODBC properly setup for the RODBC package in Windows or ROracle (default for non-Windows).
 
 See the code in JRWToolBox::import.sql()
+
+To not be prompted for your username and password first set:
+
+     UID <- "username"
+     PWD <- "myPacFIN password"
+     
+
