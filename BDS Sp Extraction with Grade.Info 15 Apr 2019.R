@@ -24,8 +24,7 @@ gitAFile <- function (URL, type = c("function", "csv", "script", "RData", "pdfGi
     }
     # ------------------------------------
 	
-	URL <- paste(strsplit(URL," ")[[1]], collapse = '%20')
-
+    URL <- paste(strsplit(URL," ")[[1]], collapse = '%20')
   
     if(grepl(type, "csv")) 
         return(read.csv(textConnection(getURL(URL))))
