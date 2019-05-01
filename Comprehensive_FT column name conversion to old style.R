@@ -2,7 +2,7 @@
 library(JRWToolBox)
   
 # This file can be downloaded to your working directory and viewed in R with: 
- JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Comprehensive_FT column name conversion to old style.R', type = "script", show = TRUE)
+ JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Comprehensive_FT column name conversion to old style.R', type = "script")
 
 # Use show = FALSE to download but not view in R.
  
