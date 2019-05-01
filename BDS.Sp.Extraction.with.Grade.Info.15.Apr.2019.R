@@ -46,7 +46,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
      PWD <- ask("Password: ")
      catf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
   }  
-print(PWD)
+
  # Get data from the bds_age table
 
    BDS_Age.sql <- 
