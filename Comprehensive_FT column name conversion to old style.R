@@ -51,7 +51,7 @@ nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
 # Here is the conversion table's use with a Petrale sole catch example:
 
 # COUNCIL_CODE = 'P'; with research catch included
-PTRL_Comprehensive_FT <- import.sql(
+PTRL_Comprehensive_FT <- JRWToolBox::import.sql(
         "Select COUNCIL_CODE, AGENCY_CODE, INPFC_AREA_TYPE_CODE, LANDING_YEAR, LANDING_DATE, FTID, PARTICIPATION_GROUP_CODE, PACFIN_CATCH_AREA_CODE, PORT_CODE, FLEET_CODE, VESSEL_ID, 
                              PACFIN_GEAR_CODE, IS_IFQ_LANDING, REMOVAL_TYPE_CODE, CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, 
                              IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, PACFIN_GROUP_GEAR_CODE, ROUND_WEIGHT_LBS, LANDED_WEIGHT_MTONS                         
