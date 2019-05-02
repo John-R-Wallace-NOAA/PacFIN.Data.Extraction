@@ -79,13 +79,14 @@ names(PTRL_Comprehensive_FT) <- JRWToolBox::recode.simple(names(PTRL_Comprehensi
 
 
 PTRL_Comprehensive_FT[1:2,]
-# #   COUNCIL_CODE AGID INPFC_AREA_TYPE_CODE YEAR      TDATE    FTID PARGRP ARID PORT FLEET VESSEL_ID GRID IFQ_LANDING REMOVAL_TYPE COND DISP    REV SPID
-# # 1            P    C                   EK 1981 1981-11-04 T057232      C   1C  201    XX  21217728  GFT       FALSE            C    R    H  14.75 PTR1
-# # 2            P    C                   EK 1981 1981-11-08 T057243      C   1C  201    XX  21217728  GFT       FALSE            C    R    H 171.10 PTR1
+# #   COUNCIL AGID INPFC_AREA_TYPE_CODE YEAR      TDATE    FTID PARGRP ARID PORT FLEET VESSEL_ID GRID IFQ_LANDING REMOVAL_TYPE COND DISP   REV SPID
+# # 1       P    C                   MT 1981 1981-10-16 T059976      C   1B  550    XX  21217593  GFT       FALSE            C    R    H 328.9 PTR1
+# # 2       P    C                   EK 1981 1981-04-28 T056803      C   1C  220    XX  21217603  GFT       FALSE            C    R    H  59.4 PTR1
 # #   NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE IS_SPECIES_COMP_USED GRADE GRADE_NAME PACFIN_GROUP_GEAR_CODE CATCH.LBS LANDED_WEIGHT_MTONS
-# # 1                                  PTRL                FALSE     L      LARGE                    TWL        25          0.01133981
-# # 2                                  PTRL                FALSE     L      LARGE                    TWL       290          0.13154179
+# # 1                                  PTRL                FALSE     L      LARGE                    TWL       715          0.32431854
+# # 2                                  PTRL                FALSE     M     MEDIUM                    TWL       110          0.04989516
 # # 
+
 
 
 # FYI, research (R) catch is seen both under FLEET and REMOVAL_TYPE (JRWToolBox::Table shows the NA's)
