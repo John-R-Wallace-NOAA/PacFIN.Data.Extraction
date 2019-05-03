@@ -14,6 +14,7 @@ library(JRWToolBox)
 # It appears that 'PRODUCT_FROM' in vdrfd was meant to be 'PRODUCT_FORM'
 # vdrfd PRMTLST (One or more NWR/LE permits under which the vessel fished) doesn't appear to have a corresponding column in the Comprehensive_FT table
 # 'COUNCIL' in the vdrfd SQL code is from the 'ar' table
+# 'GRGROUP' was matched from the gr (gear) table and now is renamed from 'PACFIN_GROUP_GEAR_CODE'
 
 nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
 
@@ -30,6 +31,7 @@ nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
                    FLEET_CODE                               FLEET
                    VESSEL_NUM                               DRVID
                    PACFIN_GEAR_CODE                         GRID
+                   PACFIN_GROUP_GEAR_CODE                   GRGROUP
                    IS_IFQ_LANDING                           IFQ_LANDING
                    REMOVAL_TYPE_CODE                        REMOVAL_TYPE
                    CONDITION_CODE                           COND
