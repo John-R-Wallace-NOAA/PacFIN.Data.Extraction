@@ -42,7 +42,7 @@ AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP <- "INPFC"
 AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP[AR_COUNCIL_P$NAME %in%  c("1A", "1B", "MNTREY BAY", "1E", "1C", "2B", "2C", "2E", "2F", "2D", "3A", "3B", "3C-S")] <- "PSMFC"  
 
 # COUNCIL_CODE = 'P'; with research catch included
-SABL.vdv.03.May.2019 <- JRWToolBox::import.sql(
+SABL.CompFT.03.May.2019 <- JRWToolBox::import.sql(
         "Select COUNCIL_CODE, AGENCY_CODE, INPFC_AREA_TYPE_CODE, LANDING_YEAR, LANDING_DATE, FTID, PARTICIPATION_GROUP_CODE, PACFIN_CATCH_AREA_CODE, PORT_CODE, FLEET_CODE, VESSEL_ID, 
                              PACFIN_GEAR_CODE, IS_IFQ_LANDING, REMOVAL_TYPE_CODE, CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, 
                              IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, PACFIN_GROUP_GEAR_CODE, ROUND_WEIGHT_LBS, LANDED_WEIGHT_MTONS                         
@@ -53,13 +53,13 @@ SABL.vdv.03.May.2019 <- JRWToolBox::import.sql(
 
 # Grab nameConvertVdrfdToCompFT from GitHub and convert to the old style short names
 JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/nameConvertVdrfdToCompFT.R')
-names(SABL.vdv.03.May.2019) <- JRWToolBox::recode.simple(names(SABL.vdv.03.May.2019), nameConvertVdrfdToCompFT)
+names(SABL.CompFT.03.May.2019) <- JRWToolBox::recode.simple(names(SABL.CompFT.03.May.2019), nameConvertVdrfdToCompFT)
   
 
 # Match INPFC_PSMFC_AREA_GROUP and compare to INPFC_AREA_TYPE_CODE and ARID. 
-SABL.vdv.03.May.2019 <- match.f(SABL.vdv.03.May.2019, AR_COUNCIL_P, "ARID", "ARID", "INPFC_PSMFC_AREA_GROUP")
+SABL.CompFT.03.May.2019 <- match.f(SABL.CompFT.03.May.2019, AR_COUNCIL_P, "ARID", "ARID", "INPFC_PSMFC_AREA_GROUP")
 
-Table(SABL.vdv.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.vdv.03.May.2019$INPFC_PSMFC_AREA_GROUP)
+Table(SABL.CompFT.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.CompFT.03.May.2019$INPFC_PSMFC_AREA_GROUP)
    
       INPFC  PSMFC
   CL   1346 152241
@@ -71,7 +71,7 @@ Table(SABL.vdv.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.vdv.03.May.2019$INPFC_PSMF
   VN   3471  80616
 
  
-Table(SABL.vdv.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.vdv.03.May.2019$ARID)
+Table(SABL.CompFT.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.CompFT.03.May.2019$ARID)
 
         1A    1B    1C    2A    2B    2C    2E    2F    3A    3B    3S    CL    OC    TL    UP    VN
   CL     0     0     0     0 34022 20871 23642 21936 51770     0     0  1345     0     1     0     0
@@ -83,7 +83,7 @@ Table(SABL.vdv.03.May.2019$INPFC_AREA_TYPE_CODE, SABL.vdv.03.May.2019$ARID)
   VN     0     0     0     0     0     0     0     0     0 44555 36061     0     0     0     0  3471
   
   
-Table(SABL.vdv.03.May.2019$INPFC_PSMFC_AREA_GROUP, SABL.vdv.03.May.2019$ARID)
+Table(SABL.CompFT.03.May.2019$INPFC_PSMFC_AREA_GROUP, SABL.CompFT.03.May.2019$ARID)
        
          1A    1B    1C    2A    2B    2C    2E    2F    3A    3B    3S    CL    OC    TL    UP    VN
 INPFC     0     0     0     0     0     0     0     0     0     0     0  1345   228     1 15424  3471
@@ -91,20 +91,20 @@ PSMFC 14112 66238 46702 22213 34022 20871 23642 21936 51770 44555 36061     0   
 
 
 # Create W_O_C_Port_Groups
-SABL.vdv.03.May.2019$W_O_C_Port_Groups <- SABL.vdv.03.May.2019$AGID
-SABL.vdv.03.May.2019$W_O_C_Port_Groups[SABL.vdv.03.May.2019$AGID %in% 'W'] <- "AWA"
-SABL.vdv.03.May.2019$W_O_C_Port_Groups[SABL.vdv.03.May.2019$AGID %in% 'O'] <- "AOR"
-SABL.vdv.03.May.2019$W_O_C_Port_Groups[SABL.vdv.03.May.2019$AGID %in% 'C'] <- "ACA"
+SABL.CompFT.03.May.2019$W_O_C_Port_Groups <- SABL.CompFT.03.May.2019$AGID
+SABL.CompFT.03.May.2019$W_O_C_Port_Groups[SABL.CompFT.03.May.2019$AGID %in% 'W'] <- "AWA"
+SABL.CompFT.03.May.2019$W_O_C_Port_Groups[SABL.CompFT.03.May.2019$AGID %in% 'O'] <- "AOR"
+SABL.CompFT.03.May.2019$W_O_C_Port_Groups[SABL.CompFT.03.May.2019$AGID %in% 'C'] <- "ACA"
 
 # Create PERIOD (months) from TDATE
-SABL.vdv.03.May.2019$PERIOD <- Months.POSIXt(SABL.vdv.03.May.2019$TDATE)
+SABL.CompFT.03.May.2019$PERIOD <- Months.POSIXt(SABL.CompFT.03.May.2019$TDATE)
 
 # Look at the data
-Table(SABL.vdv.03.May.2019$SPID, SABL.vdv.03.May.2019$W_O_C_Port_Groups)
+Table(SABL.CompFT.03.May.2019$SPID, SABL.CompFT.03.May.2019$W_O_C_Port_Groups)
 
-Table(SABL.vdv.03.May.2019$SPID, SABL.vdv.03.May.2019$YEAR)
+Table(SABL.CompFT.03.May.2019$SPID, SABL.CompFT.03.May.2019$YEAR)
 
-Table(SABL.vdv.03.May.2019$SPID, SABL.vdv.03.May.2019$YEAR, SABL.vdv.03.May.2019$AGID)
+Table(SABL.CompFT.03.May.2019$SPID, SABL.CompFT.03.May.2019$YEAR, SABL.CompFT.03.May.2019$AGID)
 
 , ,  = C
 
@@ -135,14 +135,14 @@ Table(SABL.vdv.03.May.2019$SPID, SABL.vdv.03.May.2019$YEAR, SABL.vdv.03.May.2019
 
   
   
-save(SABL.vdv.03.May.2019, file = 'SABL.vdv.03.May.2019.dmp')
+save(SABL.CompFT.03.May.2019, file = 'SABL.CompFT.03.May.2019.dmp')
 
 
 # Fleet breakdown including research and tribal catch ( Fleet type: limited entry ⇒ 'LE', open access ⇒ 'OA', tribal indian ⇒ 'TI', research ⇒ 'R', unknown ⇒ 'XX' )
    # - Tribal catch is included but not separable in a 'sc' type table.
    # - I would not assume this is all the research catch and would ask the Region what they have.
 
-change(SABL.vdv.03.May.2019)
+change(SABL.CompFT.03.May.2019)
 r(agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, FLEET), sum, na.rm=T), Print=F), 2)
 
          TI       XX      R      LE     OA
@@ -192,11 +192,11 @@ r(agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, FLEET), sum
 # ------------------------------------------- INPFC sc table -----------------------------------------------------------------------------------------------------------------------
 
 # Take out research catch for a summary catch (sc) like table
-# change(SABL.vdv.03.May.2019[!(SABL.vdv.03.May.2019$REMOVAL_TYPE %in% "R") & SABL.vdv.03.May.2019$INPFC_PSMFC_AREA_GROUP %in% 'INPFC',])  <<== !!! WRONG !!! see ARID = INPFC_ARID below
+# change(SABL.CompFT.03.May.2019[!(SABL.CompFT.03.May.2019$REMOVAL_TYPE %in% "R") & SABL.CompFT.03.May.2019$INPFC_PSMFC_AREA_GROUP %in% 'INPFC',])  <<== !!! WRONG !!! see ARID = INPFC_ARID below
 
 rm(SPID)  # Old in PacFIN R working directory
 
-change(SABL.vdv.03.May.2019[!(SABL.vdv.03.May.2019$REMOVAL_TYPE %in% "R"), ])
+change(SABL.CompFT.03.May.2019[!(SABL.CompFT.03.May.2019$REMOVAL_TYPE %in% "R"), ])
 PacFIN.SABL.Catch.INPFC.03.May.2019 <- aggregate(list(CATCH.KG = CATCH.LBS/2.2046), list(COUNCIL = COUNCIL, DAHL_SECTOR = DAHL_SECTOR, YEAR = YEAR, PERIOD = PERIOD, SPID = SPID, ARID = INPFC_ARID, 
                                           GRID = GRID, GRGROUP = GRGROUP, PCID = W_O_C_Port_Groups), sum, na.rm=T)
 PacFIN.SABL.Catch.INPFC.03.May.2019 <- sort.f(PacFIN.SABL.Catch.INPFC.03.May.2019, c('YEAR', 'PERIOD', 'ARID', 'GRID', 'PCID'))
@@ -218,14 +218,13 @@ Table(PacFIN.SABL.Catch.INPFC.03.May.2019$ARID, PacFIN.SABL.Catch.INPFC.03.May.2
   VN    0  521 1630
 
 
-
 save(PacFIN.SABL.Catch.INPFC.03.May.2019, file= 'PacFIN.SABL.Catch.INPFC.03.May.2019.dmp')
 
 
 # ------------------------------------------- PSMFC sc table ------------------------------------------------------------------------------------------------------------------------
 
 
-change(SABL.vdv.03.May.2019[!(SABL.vdv.03.May.2019$REMOVAL_TYPE %in% "R") & SABL.vdv.03.May.2019$INPFC_PSMFC_AREA_GROUP %in% 'PSMFC',])
+change(SABL.CompFT.03.May.2019[!(SABL.CompFT.03.May.2019$REMOVAL_TYPE %in% "R") & SABL.CompFT.03.May.2019$INPFC_PSMFC_AREA_GROUP %in% 'PSMFC',])
 PacFIN.SABL.Catch.PSMFC.03.May.2019 <- aggregate(list(CATCH.KG = CATCH.LBS/2.20462), list(COUNCIL = COUNCIL, DAHL_SECTOR = DAHL_SECTOR, YEAR = YEAR, PERIOD = PERIOD, SPID = SPID, ARID = ARID, 
                                           GRID = GRID, GRGROUP = GRGROUP, PCID = W_O_C_Port_Groups), sum, na.rm=T)
 PacFIN.SABL.Catch.PSMFC.03.May.2019 <- sort.f(PacFIN.SABL.Catch.PSMFC.03.May.2019, c('YEAR', 'PERIOD', 'ARID', 'GRID', 'PCID'))
@@ -252,10 +251,8 @@ Table(PacFIN.SABL.Catch.PSMFC.03.May.2019$ARID, PacFIN.SABL.Catch.PSMFC.03.May.2
   3B    0  513  537
   3S    0  377  495
 
-
-  
+ 
 save(PacFIN.SABL.Catch.PSMFC.03.May.2019, file="PacFIN.SABL.Catch.PSMFC.03.May.2019.dmp")
-
 
 
 #----------------- Comparison of PSMFC sc table to INPFC sc table -----------------------------
@@ -324,12 +321,12 @@ r(Diff.and.Ratio, 2)
 
 
 # ARID by YEAR by AGID from vdrfd view - shows where the differences in the INPFC and PSMFC areas are.
-Table(SABL.vdv.03.May.2019$ARID, SABL.vdv.03.May.2019$YEAR, SABL.vdv.03.May.2019$AGID)
+Table(SABL.CompFT.03.May.2019$ARID, SABL.CompFT.03.May.2019$YEAR, SABL.CompFT.03.May.2019$AGID)
 
 
 
 #  Research catch by year and removal type - compare with FLEET removal
-change(SABL.vdv.03.May.2019)
+change(SABL.CompFT.03.May.2019)
 r(agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, REMOVAL_TYPE), sum, na.rm=T), Print = F), 3)
 
            C     D     P     R     E     U
