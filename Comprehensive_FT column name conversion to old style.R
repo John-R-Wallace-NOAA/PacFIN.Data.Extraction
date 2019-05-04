@@ -4,6 +4,9 @@ library(JRWToolBox)
 # This file can be downloaded to your working directory and viewed in R with: 
  JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Comprehensive_FT column name conversion to old style.R', type = "script", File = 'Comprehensive_FT column name conversion to old style.R')
 
+# The table nameConvertVdrfdToCompFT can be loaded into R with:
+JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/nameConvertVdrfdToCompFT.R')
+
 # See the Prologue in the README for the JRWToolBox package for more information on gitAFile()
 
  
