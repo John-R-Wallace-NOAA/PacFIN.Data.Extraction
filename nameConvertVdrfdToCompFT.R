@@ -16,6 +16,7 @@ nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
                    PARTICIPATION_GROUP_CODE                 PARGRP
                    PACFIN_PORT_CODE                         PCID
                    PACFIN_CATCH_AREA_CODE                   ARID
+                   INPFC_AREA_TYPE_CODE                     INPFC_ARID
                    PORT_CODE                                PORT
                    FLEET_CODE                               FLEET
                    VESSEL_NUM                               DRVID
