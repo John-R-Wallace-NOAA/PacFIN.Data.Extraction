@@ -1,8 +1,8 @@
 
-# Download into your working directory and view this file in R with:
+# Download into your working directory and view this script in R with:
 JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/PacFIN Catch Extraction, Sablefish Example.R', type = "script", File = 'PacFIN Catch Extraction, Sablefish Example.R')
 
-# If you have copied and updated gitEdit() with your favorite editor, then download and insert this file into your editor with:
+# If you have copied and updated gitEdit() with your favorite editor, then download and insert this script into your editor with:
 gitEdit('PacFIN Catch Extraction, Sablefish Example.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
 
 
