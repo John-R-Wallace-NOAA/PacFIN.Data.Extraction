@@ -1,5 +1,9 @@
 
 
+# In SQL, one cannot match in  COUNCIL from the 'ar' table since the correct way is to to bring it in by matching ARID with PSMFC_ARID, 
+#              but a lot of WA BDS is missing PSMFC_ARID (empty character string: "") and hence gets dropped.
+# Time to move to comprehensive_bds_comm for 2021!
+
 if(F) {
    
    UID <- "wallacej"
@@ -18,9 +22,8 @@ if(F) {
 
 # =================================================
 
-
 bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = paste("bds_", SPID, ".csv", sep=""), 
-	minYr = 1900, maxYr = 2100, Condition = TRUE, stringsAsCharacter = TRUE, dsn="PacFIN") {
+	minYr = 1900, maxYr = 2100, stringsAsCharacter = TRUE, dsn="PacFIN") {
 
   # Example using SQL without an external file:
   #   import.sql("Select * from pacfin.bds_sp where rownum < 11", dsn="PacFIN", uid=UID, pwd=PWD)  
@@ -32,9 +35,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
       readLines(con = stdin(), n = 1)
   }
 
-  library(JRWToolBox)    
 
-	
 # ------------------------------------------------------
 
  # Ask for User ID and password
@@ -111,43 +112,18 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 
  # Get data from the bds_fish table; info on the sampled fish
 
-  # ftl.2008 <- import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
+ # ftl.2008 <- import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
 
- if(Condition) {
-   # ************ pacfin.bds_sample_odfw's unk.wt is called unk.wgt in PacFIN's metadata on the internet!!!!!! ***********
+
+ # ************ pacfin.bds_sample_odfw's unk.wt is called unk.wgt in PacFIN's metadata on the internet! ***********
    BDS_Fish.sql <- 
-    "select ar.council, f.spid, f.sample_no, f.sample_year, f.source_agid, s.sample_agency, f.cluster_no, f.fish_age_years_final, f.fish_age_code_final,
+    "select f.spid, f.sample_no, f.sample_year, f.source_agid, s.sample_agency, f.cluster_no, f.fish_age_years_final, f.fish_age_code_final,
             f.fish_no, f.freq, f.fish_length, f.fish_length_type, f.fork_length_estimated, 
             f.fork_length, f.maturity, f.maturity_agcode,f.fish_weight, f.sex,
             data_type, depth_avg, depth_min, depth_max, s.drvid, s.gear, s.grid, s.market_category, s.grade, s.grade_agcode,
             inpfc_area, psmfc_area, psmfc_arid, sample_agid,
             sample_month, sample_day, sample_method, sample_type, males_wgt, 
             males_num, females_num, females_wgt, o.unk_num, o.unk_wt, total_wgt, rwt_lbs, lwt_lbs, o.exp_wt, s.pcid, s.port, s.ftid, s.cond, s.cond_agcode, s.grade, s.grade_agcode, s.wgtmax, s.wgtmin
-      from (select v.ftid, v.agid, sum(v.rwt_lbs) as rwt_lbs, sum(v.lwt_lbs) as lwt_lbs
-            from pacfin.vdrfd v 
-            where v.spid = any &sp
-            group by v.ftid, v.agid) v2, pacfin.bds_fish f, pacfin.bds_sample s, pacfin.bds_sample_odfw o, pacfin.ar
-      where f.spid = any &sp
-        and s.sample_no = f.sample_no(+)
-        and s.sample_no = o.sample_no(+)
-        and s.sample_year = f.sample_year(+)
-        and s.sample_year between &beginyr and &endyr
-        and s.sample_year = o.sample_year(+)
-        and s.ftid = v2.ftid(+)
-        and s.sample_agid = v2.agid(+)
-        and psmfc_arid = ar.arid
-       and ar.council = 'P'
-      order by sample_year, source_agid, sample_no, fish_no, cluster_no"
- } else {
-   # ************* Not updated *****************
-   BDS_Fish.sql <- 
-    "select f.spid, f.sample_no, f.sample_year, f.source_agid, s.sample_agency, f.cluster_no, f.fish_age_years_final, f.fish_age_code_final,
-            f.fish_no, f.freq, f.fish_length, f.fish_length_type, f.fork_length_estimated, 
-            f.fork_length, f.maturity, f.maturity_agcode,f.fish_weight, f.sex,
-            data_type, depth_avg, depth_min, depth_max, s.drvid, s.gear, s.grid, 
-            inpfc_area, psmfc_area, psmfc_arid, sample_agid,
-            sample_month, sample_day, sample_method, sample_type, males_wgt, 
-            males_num, females_num, females_wgt, total_wgt, rwt_lbs, lwt_lbs, o.exp_wt, s.pcid, s.port, s.ftid
       from (select v.ftid, v.agid, sum(v.rwt_lbs) as rwt_lbs, sum(v.lwt_lbs) as lwt_lbs
             from pacfin.vdrfd v 
             where v.spid = any &sp
@@ -161,7 +137,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         and s.ftid = v2.ftid(+)
         and s.sample_agid = v2.agid(+)
       order by sample_year, source_agid, sample_no, fish_no, cluster_no"
- }
+ 
 
     catf("\nGet bds_fish:", date(), "\n\n")
     flush.console()
