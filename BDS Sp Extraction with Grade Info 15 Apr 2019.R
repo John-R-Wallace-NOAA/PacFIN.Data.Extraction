@@ -5,7 +5,15 @@
 # Time to move to comprehensive_bds_comm for 2021!
 
 if(F) {
+
+   # Download into R with:
+   JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/BDS Sp Extraction with Grade Info 15 Apr 2019.R', show = FALSE)
+
    
+   # If you have copied and updated gitEdit() with your favorite editor, then download and insert this entire script (comments plus function) into your editor with:
+    JRWToolBox::gitEdit('BDS Sp Extraction with Grade Info 15 Apr 2019.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
+
+      
    UID <- "wallacej"
    PWD <- PacFIN.PW
    
@@ -25,9 +33,9 @@ if(F) {
 bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = paste("bds_", SPID, ".csv", sep=""), 
 	minYr = 1900, maxYr = 2100, stringsAsCharacter = TRUE, dsn="PacFIN") {
   
-  # This extraction uses the RODBC package via JRWToolBox::import.sql
+  # This extraction uses the RODBC package via JRWToolBox::import.sql()
   # Example using SQL without an external file:
-  #   JRWToolBox::import.sql("Select * from pacfin.bds_sp where rownum < 11", dsn="PacFIN", uid=UID, pwd=PWD)  
+  #    import.sql("Select * from pacfin.bds_sp where rownum < 11", dsn="PacFIN", uid=UID, pwd=PWD)  
     
   ask <- function (msg = "Press <RETURN> to continue: ") 
   {
@@ -65,9 +73,8 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
       order by sample_year, source_agid, sample_no, cluster_no, fish_no, age_no"
 
     catf("\nGet bds_age:", date(), "\n\n")
-    flush.console()
-
-    age_temp <- JRWToolBox::import.sql(BDS_Age.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn, View.Parsed.Only = FALSE)
+   
+    age_temp <- import.sql(BDS_Age.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn, View.Parsed.Only = FALSE)
  
      if(nrow(age_temp) > 0)  {
 
@@ -77,8 +84,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
        if(length(Table(age_temp$AGENUM)) > 3)
            stop("More than three agers!")
        catf("\nGot bds_age at", date(), "\n\n")
-       flush.console()
-
+      
        # Line up any multiple ages into columns so that one line = one fish
 
     
@@ -113,7 +119,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 
  # Get data from the bds_fish table; info on the sampled fish
 
- # ftl.2008 <- JRWToolBox::import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
+ # ftl.2008 <- import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
 
 
  # ************ pacfin.bds_sample_odfw's unk.wt is called unk.wgt in PacFIN's metadata on the internet! ***********
@@ -141,15 +147,13 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
  
 
     catf("\nGet bds_fish:", date(), "\n\n")
-    flush.console()
-
-    bds_fish <- JRWToolBox::import.sql(BDS_Fish.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    
+    bds_fish <- import.sql(BDS_Fish.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
 
     printf(ifelse(is.data.frame(bds_fish), bds_fish[1:3,], bds_fish))
 
     catf("\nGot bds_fish:\n\n")
-    flush.console()
-
+    
   
     bds_fish$KEY <- paste(bds_fish$SAMPLE_YEAR, bds_fish$SOURCE_AGID, bds_fish$SAMPLE_NO, bds_fish$CLUSTER_NO, bds_fish$FISH_NO)
 
@@ -165,8 +169,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
  # BDS_CLUSTER for this particular sp
 
     catf("\nGet bds_cluster for", SPID, ":", date(), "\n\n")
-    flush.console()
-
+    
   BDS_Cluster_Sp.sql <- 
     "select spid, sample_year, source_agid, sample_no, cluster_no, species_wgt,
             cluster_wgt, frame_clwt, adj_clwt 
@@ -175,12 +178,11 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         and sample_year between &beginyr and &endyr"
 
 
-    bds_clust_sp <- JRWToolBox::import.sql(BDS_Cluster_Sp.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    bds_clust_sp <- import.sql(BDS_Cluster_Sp.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
 
     printf(bds_clust_sp[1:3, ])
     catf("\nGot bds_cluster for", SPID, ":\n\n")
-    flush.console()
-
+    
  # Take out dups
     bds_clust_sp <- bds_clust_sp[!duplicated(paste(bds_clust_sp$SAMPLE_NO, bds_clust_sp$CLUSTER_NO)),]
 
@@ -199,14 +201,13 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 
 
     catf("\nGet bds_cluster for all species:", date(), "\n\n")
-    flush.console()    
+     
 
-    bds_clust_all <- JRWToolBox::import.sql(BDS_Cluster_All.sql, c("&beginyr", "&endyr"), c(minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    bds_clust_all <- import.sql(BDS_Cluster_All.sql, c("&beginyr", "&endyr"), c(minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
    
     printf(bds_clust_all[1:3, ])
     catf("\nGot bds_cluster for all species:\n\n")
-    flush.console()
-
+    
   # Take out dups
     bds_clust_all <- bds_clust_all[!duplicated(paste(bds_clust_all$SAMPLE_NO, bds_clust_all$CLUSTER_NO)),]
 
@@ -247,6 +248,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     bds_fish
 
 }
+
 
 
 
