@@ -10,7 +10,7 @@ if(F) {
    PWD <- PacFIN.PW
    
    # Test PacFIN connection
-   import.sql("Select * from pacfin.bds_sp where rownum < 11", File=F, dsn="PacFIN", uid=UID, pwd=PWD)
+   JRWToolBox::import.sql("Select * from pacfin.bds_sp where rownum < 11", File=F, dsn="PacFIN", uid=UID, pwd=PWD)
    
    
    # ******************* Using the new SQL code with 'ANY' changes the calls used: ******************
@@ -24,9 +24,10 @@ if(F) {
 
 bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = paste("bds_", SPID, ".csv", sep=""), 
 	minYr = 1900, maxYr = 2100, stringsAsCharacter = TRUE, dsn="PacFIN") {
-
+  
+  # This extraction uses the RODBC package via JRWToolBox::import.sql
   # Example using SQL without an external file:
-  #   import.sql("Select * from pacfin.bds_sp where rownum < 11", dsn="PacFIN", uid=UID, pwd=PWD)  
+  #   JRWToolBox::import.sql("Select * from pacfin.bds_sp where rownum < 11", dsn="PacFIN", uid=UID, pwd=PWD)  
     
   ask <- function (msg = "Press <RETURN> to continue: ") 
   {
@@ -35,7 +36,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
       readLines(con = stdin(), n = 1)
   }
 
-
+  require(JRWToolBox)
 # ------------------------------------------------------
 
  # Ask for User ID and password
@@ -66,7 +67,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     catf("\nGet bds_age:", date(), "\n\n")
     flush.console()
 
-    age_temp <- import.sql(BDS_Age.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn, View.Parsed.Only = FALSE)
+    age_temp <- JRWToolBox::import.sql(BDS_Age.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn, View.Parsed.Only = FALSE)
  
      if(nrow(age_temp) > 0)  {
 
@@ -112,7 +113,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 
  # Get data from the bds_fish table; info on the sampled fish
 
- # ftl.2008 <- import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
+ # ftl.2008 <- JRWToolBox::import.sql("Select * from ftl where year = 2008 and rownum < 1001", dsn="PacFIN", uid = UID, pwd=PWD)
 
 
  # ************ pacfin.bds_sample_odfw's unk.wt is called unk.wgt in PacFIN's metadata on the internet! ***********
@@ -142,7 +143,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     catf("\nGet bds_fish:", date(), "\n\n")
     flush.console()
 
-    bds_fish <- import.sql(BDS_Fish.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    bds_fish <- JRWToolBox::import.sql(BDS_Fish.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
 
     printf(ifelse(is.data.frame(bds_fish), bds_fish[1:3,], bds_fish))
 
@@ -174,7 +175,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         and sample_year between &beginyr and &endyr"
 
 
-    bds_clust_sp <- import.sql(BDS_Cluster_Sp.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    bds_clust_sp <- JRWToolBox::import.sql(BDS_Cluster_Sp.sql, c("&sp", "&beginyr", "&endyr"), c(SPID, minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
 
     printf(bds_clust_sp[1:3, ])
     catf("\nGot bds_cluster for", SPID, ":\n\n")
@@ -200,7 +201,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     catf("\nGet bds_cluster for all species:", date(), "\n\n")
     flush.console()    
 
-    bds_clust_all <- import.sql(BDS_Cluster_All.sql, c("&beginyr", "&endyr"), c(minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
+    bds_clust_all <- JRWToolBox::import.sql(BDS_Cluster_All.sql, c("&beginyr", "&endyr"), c(minYr, maxYr), uid = UID, pwd = PWD, dsn = dsn)
    
     printf(bds_clust_all[1:3, ])
     catf("\nGot bds_cluster for all species:\n\n")
@@ -246,5 +247,6 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     bds_fish
 
 }
+
 
 
