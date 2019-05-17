@@ -130,7 +130,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
             data_type, depth_avg, depth_min, depth_max, s.drvid, s.gear, s.grid, s.market_category, s.grade, s.grade_agcode,
             inpfc_area, psmfc_area, psmfc_arid, sample_agid,
             sample_month, sample_day, sample_method, sample_type, males_wgt, 
-            males_num, females_num, females_wgt, o.unk_num, o.unk_wt, total_wgt, rwt_lbs, lwt_lbs, o.exp_wt, s.pcid, s.port, s.ftid, s.cond, s.cond_agcode, s.grade, s.grade_agcode, s.wgtmax, s.wgtmin
+            males_num, females_num, females_wgt, o.unk_num, o.unk_wt, o.quality, total_wgt, rwt_lbs, lwt_lbs, o.exp_wt, s.pcid, s.port, s.ftid, s.cond, s.cond_agcode, s.grade, s.grade_agcode, s.wgtmax, s.wgtmin
       from (select v.ftid, v.agid, sum(v.rwt_lbs) as rwt_lbs, sum(v.lwt_lbs) as lwt_lbs
             from pacfin.vdrfd v 
             where v.spid = any &sp
