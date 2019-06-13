@@ -14,7 +14,7 @@ load("PacFIN.WDOW.bds.13.Jun.2019.dmp")
 
 JRWToolBox::Table(WDOW.CompFT.13.Jun.2019$DAHL_SECTOR, WDOW.CompFT.13.Jun.2019$ARID)
 
-PacFIN.WDOW.bds.13.Jun.2019 <- JRWToolBox:match.f(PacFIN.WDOW.bds.13.Jun.2019, WDOW.CompFT.13.Jun.2019, "FTID", "FTID", "DAHL_SECTOR")
+PacFIN.WDOW.bds.13.Jun.2019 <- JRWToolBox::match.f(PacFIN.WDOW.bds.13.Jun.2019, WDOW.CompFT.13.Jun.2019, "FTID", "FTID", "DAHL_SECTOR")
 PacFIN.WDOW.bds.13.Jun.2019[1:4,]
 
 
