@@ -1,6 +1,6 @@
 
 
-# In SQL, one cannot match in  COUNCIL from the 'ar' table since the correct way is to to bring it in by matching ARID with PSMFC_ARID, 
+# In SQL, one cannot match in  COUNCIL from the 'ar' table since the correct way is to bring it in by matching ARID with PSMFC_ARID, 
 #              but a lot of WA BDS is missing PSMFC_ARID (empty character string: "") and hence gets dropped.
 # Time to move to comprehensive_bds_comm for 2021!
 
