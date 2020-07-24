@@ -1,6 +1,6 @@
 
 # Download into your working directory and view this script in R with:
-JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/PacFIN Catch Extraction, Sablefish Example.R', type = "script", File = 'PacFIN Catch Extraction, Sablefish Example.R', show = TRUE)
+rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/PacFIN Catch Extraction, Sablefish Example.R', type = "script", File = 'PacFIN Catch Extraction, Sablefish Example.R', show = TRUE)
 
 # If you have copied and updated gitEdit() with your favorite editor, then download and insert this script into your editor with:
 gitEdit('PacFIN Catch Extraction, Sablefish Example.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
@@ -60,7 +60,7 @@ SABL.CompFT.05.May.2019 <- JRWToolBox::import.sql(
            and AGENCY_CODE in ('W','O','C')", dsn="PacFIN", uid=UID, pwd=PWD)
 
 # Grab nameConvertVdrfdToCompFT from GitHub and convert to the old style short names
-JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/nameConvertVdrfdToCompFT.R')
+rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/nameConvertVdrfdToCompFT.R')
 names(SABL.CompFT.05.May.2019) <- JRWToolBox::recode.simple(names(SABL.CompFT.05.May.2019), nameConvertVdrfdToCompFT)
 
 
@@ -151,7 +151,7 @@ Table(SABL.CompFT.05.May.2019$SPID, SABL.CompFT.05.May.2019$YEAR, SABL.CompFT.05
 save(SABL.CompFT.05.May.2019, file = 'SABL.CompFT.05.May.2019.dmp')
 
 
-# Fleet breakdown including research and tribal catch ( Fleet type: limited entry ⇒ 'LE', open access ⇒ 'OA', tribal indian ⇒ 'TI', research ⇒ 'R', unknown ⇒ 'XX' )
+# Fleet breakdown including research and tribal catch ( Fleet type: limited entry <U+21D2> 'LE', open access <U+21D2> 'OA', tribal indian <U+21D2> 'TI', research <U+21D2> 'R', unknown <U+21D2> 'XX' )
    # - Tribal catch is included but not separable in a 'sc' type table.
    # - I would not assume this is all the research catch and would ask the Region what they have.
 
@@ -386,6 +386,7 @@ r(agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, REMOVAL_TYP
 2017  5488.273     NA 5.223  0.064   2.940    NA 44.316
 2018  5126.120     NA 4.202  0.008  27.243 0.268 48.218
 2019   953.076     NA 0.253  0.012      NA    NA  0.015
+
 
 
 
