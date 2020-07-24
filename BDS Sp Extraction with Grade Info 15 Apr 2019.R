@@ -7,11 +7,11 @@
 if(F) {
 
    # Download into R with:
-   JRWToolBox::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/BDS Sp Extraction with Grade Info 15 Apr 2019.R', show = FALSE)
+   rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/BDS Sp Extraction with Grade Info 15 Apr 2019.R', show = FALSE)
 
    
    # If you have copied and updated gitEdit() with your favorite editor, then download and insert this entire script (comments plus function) into your editor with:
-    JRWToolBox::gitEdit('BDS Sp Extraction with Grade Info 15 Apr 2019.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
+   rgit::gitEdit('BDS Sp Extraction with Grade Info 15 Apr 2019.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
 
       
    UID <- "wallacej"
