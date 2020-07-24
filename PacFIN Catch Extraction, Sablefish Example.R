@@ -159,7 +159,7 @@ save(SABL.CompFT.05.May.2019, file = 'SABL.CompFT.05.May.2019.RData')
 change(SABL.CompFT.05.May.2019)
 SABL.Research.Catch.05.May.2019 <- agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, FLEET), sum, na.rm=T), Print=F)
 r(SABL.Research.Catch.05.May.2019, 2)
-save(SABL.Research.Catch.05.May.2019, file = 'SABL.Research.Catch.05.May.2019.dmp')
+save(SABL.Research.Catch.05.May.2019, file = 'SABL.Research.Catch.05.May.2019.RData')
          TI       XX      R      LE     OA
 1981   0.00 11418.89     NA      NA     NA
 1982     NA 18627.05     NA      NA     NA
@@ -234,7 +234,7 @@ Table(PacFIN.SABL.Catch.INPFC.05.May.2019$ARID, PacFIN.SABL.Catch.INPFC.05.May.2
   VN    0  589 2281
 
 
-save(PacFIN.SABL.Catch.INPFC.05.May.2019, file= 'PacFIN.SABL.Catch.INPFC.05.May.2019.dmp')
+save(PacFIN.SABL.Catch.INPFC.05.May.2019, file= 'PacFIN.SABL.Catch.INPFC.05.May.2019.RData')
 
 
 # ------------------------------------------- PSMFC sc table ------------------------------------------------------------------------------------------------------------------------
@@ -268,7 +268,7 @@ Table(PacFIN.SABL.Catch.PSMFC.05.May.2019$ARID, PacFIN.SABL.Catch.PSMFC.05.May.2
   3S    0  423  591
 
   
-save(PacFIN.SABL.Catch.PSMFC.05.May.2019, file="PacFIN.SABL.Catch.PSMFC.05.May.2019.dmp")
+save(PacFIN.SABL.Catch.PSMFC.05.May.2019, file="PacFIN.SABL.Catch.PSMFC.05.May.2019.RData")
 
 
 
