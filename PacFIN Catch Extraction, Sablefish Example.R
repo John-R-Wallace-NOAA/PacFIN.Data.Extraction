@@ -149,7 +149,7 @@ Table(SABL.CompFT.05.May.2019$SPID, SABL.CompFT.05.May.2019$YEAR, SABL.CompFT.05
 
   
   
-save(SABL.CompFT.05.May.2019, file = 'SABL.CompFT.05.May.2019.dmp')
+save(SABL.CompFT.05.May.2019, file = 'SABL.CompFT.05.May.2019.RData')
 
 
 # Fleet breakdown including research and tribal catch ( Fleet type: limited entry <U+21D2> 'LE', open access <U+21D2> 'OA', tribal indian <U+21D2> 'TI', research <U+21D2> 'R', unknown <U+21D2> 'XX' )
