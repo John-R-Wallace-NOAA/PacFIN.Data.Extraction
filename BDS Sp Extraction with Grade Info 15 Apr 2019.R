@@ -24,7 +24,8 @@ if(F) {
    # ******************* Using the new SQL code with 'ANY' changes the calls used: ******************
    PacFIN.WDOW.bds.05.Jun.2015 <- bds.sp.extraction("'WDOW'")
    PacFIN.WDOW.bds.05.Jun.2015 <- bds.sp.extraction("('WDOW', 'WDW1')")  # No nominal species in BDS that I have seen
-    
+	
+   save(PacFIN.WDOW.bds.05.Jun.2015, file = 'PacFIN.WDOW.bds.05.Jun.2015.RData')
 }
 
 
