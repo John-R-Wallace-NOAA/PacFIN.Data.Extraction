@@ -239,7 +239,6 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 	 
  # Add Dahl sector info
 
-
     if(!is.null(PacFIN.Catch.Dahl)) {
 	
 	   catf("\nAdding Dahl sector information from the catch data provided\n\n")
@@ -247,13 +246,13 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)
         
         bds_fish <- JRWToolBox::match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR")
-        bds_fish[1:4,]
+        printf(bds_fish[1:4,])
                 
         # Percent matching
         notMissing <- JRWToolBox::Table(!is.na(bds_fish$DAHL_SECTOR))
 		
 		catf("\nTabulation of FTID with not missing Dahl sector info\n")
-		printf(nonMissing)
+		printf(notMissing)
         
         catf("\nPercent of FTID with not missing Dahl Sector info:", 100 * notMissing[2]/sum(notMissing), "\n\n")
         
