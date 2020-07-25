@@ -243,7 +243,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 	
 	   catf("\nAdding Dahl sector information from the catch data provided\n\n")
 
-        printf(JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID))
+        print(JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)); catf("\n\n")
         
         bds_fish <- JRWToolBox::match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR")
         printf(bds_fish[1:4,])
