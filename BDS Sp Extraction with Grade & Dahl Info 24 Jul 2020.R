@@ -251,10 +251,10 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         # Percent matching
         notMissing <- JRWToolBox::Table(!is.na(bds_fish$DAHL_SECTOR))
 		
-		catf("\nTabulation of FTID with not missing Dahl sector info\n")
+		catf("\nTabulation of FTID with Dahl sector info\n")
 		printf(notMissing)
         
-        catf("\nPercent of FTID with not missing Dahl Sector info:", 100 * notMissing[2]/sum(notMissing), "\n\n")
+        catf("\nPercent of FTID with Dahl Sector info:", 100 * notMissing[2]/sum(notMissing), "\n\n")
         
         JRWToolBox::Table(bds_fish$DAHL_SECTOR, bds_fish$SAMPLE_YEAR, bds_fish$SAMPLE_AGENCY)
     }
