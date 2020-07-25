@@ -61,7 +61,7 @@ SABL.CompFT.05.May.2019 <- JRWToolBox::import.sql(
            and AGENCY_CODE in ('W','O','C')", dsn="PacFIN", uid=UID, pwd=PWD)
 
 # Grab nameConvertVdrfdToCompFT from GitHub and convert to the old style short names
-rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/nameConvertVdrfdToCompFT.R')
+rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/R/nameConvertVdrfdToCompFT.R')
 names(SABL.CompFT.05.May.2019) <- JRWToolBox::recode.simple(names(SABL.CompFT.05.May.2019), nameConvertVdrfdToCompFT)
 
 
