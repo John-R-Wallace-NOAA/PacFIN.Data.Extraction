@@ -246,7 +246,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 
         JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)
         
-        bds_fish <- JRWToolBox::match.f(bds_fish, WDOW.CompFT.13.Jun.2019, "FTID", "FTID", "DAHL_SECTOR")
+        bds_fish <- JRWToolBox::match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR")
         bds_fish[1:4,]
                 
         # Percent matching
