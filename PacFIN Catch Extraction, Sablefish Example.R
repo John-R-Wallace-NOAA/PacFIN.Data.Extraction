@@ -338,7 +338,7 @@ r(Diff.and.Ratio, 2)
 
 
 
-# ARID by YEAR by AGID from vdrfd view - shows where the differences in the INPFC and PSMFC areas are.
+# ARID by YEAR by AGID - shows where the differences in the INPFC and PSMFC areas are.
 Table(SABL.CompFT.05.May.2019$ARID, SABL.CompFT.05.May.2019$YEAR, SABL.CompFT.05.May.2019$AGID)
 
 
