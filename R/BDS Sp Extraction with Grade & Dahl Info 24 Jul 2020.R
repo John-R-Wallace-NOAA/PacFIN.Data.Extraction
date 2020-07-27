@@ -243,20 +243,20 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 	
 	catf("\nAdding Dahl sector information from the catch data provided\n\n")
 
-        print(JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)); catf("\n\n")
+        print(Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)); catf("\n\n")
         
-        bds_fish <- JRWToolBox::match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR")
-        printf(renum(bds_fish[1:4,]))
+        bds_fish <- renum(match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR"))
+        printf(bds_fish[1:4,])
                 
         # Percent matching
-        notMissing <- JRWToolBox::Table(!(is.na(bds_fish$DAHL_SECTOR) | bds_fish$DAHL_SECTOR %in% 'XX'))
+        notMissing <- Table(!(is.na(bds_fish$DAHL_SECTOR) | bds_fish$DAHL_SECTOR %in% 'XX'))
 		
         catf("\nTabulation of FTID with Dahl sector info\n")
         printf(notMissing)
         
         catf("\nPercent of FTID with Dahl Sector info:", 100 * notMissing[2]/sum(notMissing), "\n\n")
         
-        printf(JRWToolBox::Table(bds_fish$DAHL_SECTOR, bds_fish$SAMPLE_YEAR, bds_fish$SAMPLE_AGENCY))
+        printf(Table(bds_fish$DAHL_SECTOR, bds_fish$SAMPLE_YEAR, bds_fish$SAMPLE_AGENCY))
     }
 
  # Return result
