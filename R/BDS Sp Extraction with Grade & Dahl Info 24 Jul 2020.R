@@ -246,7 +246,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         print(JRWToolBox::Table(PacFIN.Catch.Dahl$DAHL_SECTOR, PacFIN.Catch.Dahl$ARID)); catf("\n\n")
         
         bds_fish <- JRWToolBox::match.f(bds_fish, PacFIN.Catch.Dahl, "FTID", "FTID", "DAHL_SECTOR")
-        printf(bds_fish[1:4,])
+        printf(renum(bds_fish[1:4,]))
                 
         # Percent matching
         notMissing <- JRWToolBox::Table(!is.na(bds_fish$DAHL_SECTOR))
