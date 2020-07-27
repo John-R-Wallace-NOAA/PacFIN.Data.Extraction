@@ -1,5 +1,5 @@
 
-   library(JRWToolBox)
+   library(JRWToolBox)  # rgit package now loaded with JRWToolBox
 
    rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/R/BDS Sp Extraction with Grade & Dahl Info 24 Jul 2020.R', show = FALSE)
         
