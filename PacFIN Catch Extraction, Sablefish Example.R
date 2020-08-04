@@ -70,6 +70,8 @@ names(SABL.CompFT.05.May.2019) <- JRWToolBox::recode.simple(names(SABL.CompFT.05
 # tmp <- match.f(SABL.CompFT.05.May.2019, AR_COUNCIL_P, "ARID", "ARID", "INPFC_ARID")
 SABL.CompFT.05.May.2019 <- match.f(SABL.CompFT.05.May.2019, AR_COUNCIL_P, "ARID", "ARID", "INPFC_PSMFC_AREA_GROUP")
 
+SABL.CompFT.05.May.2019[1:4, ]
+
 Table(SABL.CompFT.05.May.2019$INPFC_ARID, SABL.CompFT.05.May.2019$INPFC_PSMFC_AREA_GROUP)
    
       INPFC  PSMFC
