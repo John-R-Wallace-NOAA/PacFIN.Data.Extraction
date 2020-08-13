@@ -237,7 +237,6 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
  # Cleanup
    
     bds_fish$KEY <- NULL
-    bds_fish$i <- NA
     
     if(stringsAsCharacter) 
          bds_fish <- data.frame(lapply(bds_fish, function(x) if(is.factor(x)) as.character(x) else x), stringsAsFactors = FALSE)
