@@ -244,7 +244,10 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
 	 
  # Add Dahl sector info
 
-    if(!is.null(PacFIN.Catch.Dahl)) {
+    if(is.null(PacFIN.Catch.Dahl)) {
+	    
+	bds_fish$DAHL_SECTOR <- NA
+    } else {
 	
 	catf("\nAdding Dahl sector information from the catch data provided\n\n")
 
@@ -263,7 +266,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
         
         printf(Table(bds_fish$DAHL_SECTOR, bds_fish$SAMPLE_YEAR, bds_fish$SAMPLE_AGENCY))
     }
-
+   
  # Return result
 
     if(write.to.file) {
