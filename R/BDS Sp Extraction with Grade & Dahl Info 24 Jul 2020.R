@@ -169,7 +169,7 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
      bds_fish <- match.f(bds_fish, bds_age, "KEY", "KEY", c("AGE_STRUCT_AGCODE", "AGE_METHOD", "AGE_READABILITY", "AGED_BY",
 	 "DATE_AGED", dimnames(bds_age)[[2]][grep("age", dimnames(bds_age)[[2]])]))
    } else {
-      bds_fish$age3 <- bds_fish$age2 <- bds_fish$age1 <- bds_fish$DATE_AGED <- bds_fish$AGE_READABILITY <- bds_fish$AGE_METHOD <- bds_fish$AGE_STRUCT_AGCODE <- NA
+      bds_fish$age3 <- bds_fish$age2 <- bds_fish$age1 <- bds_fish$DATE_AGED <- bds_fish$AGED_BY <- bds_fish$AGE_READABILITY <- bds_fish$AGE_METHOD <- bds_fish$AGE_STRUCT_AGCODE <- NA
    }
   
  # BDS_CLUSTER for this particular sp
