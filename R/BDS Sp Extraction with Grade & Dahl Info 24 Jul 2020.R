@@ -156,6 +156,9 @@ bds.sp.extraction <- function(SPID = "'PTRL'", write.to.file = F, file.out = pas
     catf("\nGot bds_fish:\n\n")
     
     bds_fish$FISH_LENGTH_TYPE <- as.character(bds_fish$FISH_LENGTH_TYPE)  # May contain only 'T' (total) and/or 'F' (fork) length types, if so this will auto convert to logical on download.
+    bds.fish$FISH_LENGTH_TYPE[bds.fish$FISH_LENGTH_TYPE %in% 'FALSE'] <- 'F' 
+    bds.fish$FISH_LENGTH_TYPE[bds.fish$FISH_LENGTH_TYPE %in% 'TRUE'] <- 'T'
+    
     bds_fish$KEY <- paste(bds_fish$SAMPLE_YEAR, bds_fish$SOURCE_AGID, bds_fish$SAMPLE_NO, bds_fish$CLUSTER_NO, bds_fish$FISH_NO)
 
     
