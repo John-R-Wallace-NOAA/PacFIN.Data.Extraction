@@ -34,6 +34,34 @@ Table(PacFIN.SBLY.bds.04.Aug.2020$COND_AGCODE, PacFIN.SBLY.bds.04.Aug.2020$SAMPL
 cl <- import.sql("Select * from pacfin.cl", dsn="PacFIN", uid=UID, pwd=PWD)
 renum(cl[grep("COND", cl$NAME),])
 
+          NAME YEAR LENGTH CODE                           DESCRIPTION
+1    CONDITION    0      1    D                      dressed, head on
+2    CONDITION    0      1    E                       fish eggs (roe)
+3    CONDITION    0      1    F                                fillet
+4    CONDITION    0      1    H                     dressed, head off
+5    CONDITION    0      1    L                            liver only
+6    CONDITION    0      1    O                other known conditions
+7    CONDITION    0      1    Q                            heads only
+8    CONDITION    0      1    R                                 round
+9    CONDITION    0      1    S                   shucked (shellfish)
+10   CONDITION    0      1    T            dressed, head and tail off
+11   CONDITION    0      1    U                           unspecified
+12   CONDITION    0      1    V flakes (contact CDFG for description)
+13   CONDITION    0      1    W                            wings only
+14   CONDITION    0      1    X              frozen dressed, head off
+15   CONDITION    0      1    Y                          frozen round
+16   CONDITION    0      1    Z               frozen dressed, head on
+17   CONDITION    0      1    C                claws and/or legs only
+18   CONDITION    0      1    A                                 alive
+19   CONDITION    0      1    M                                surimi
+20   CONDITION    0      1    G        dressed, general, non-specific
+21   CONDITION    0      1    J     most probably landed in the round
+22 SAMPLE-COND    0      1    D                                  DEAD
+23 SAMPLE-COND    0      1    L                                  LIVE
+24 SAMPLE-COND    0      1    9                All Landing Conditions
+25   CONDITION    0      1    I         dressed, head off eastern cut
+26   CONDITION    0      1    K         dressed, head off western cut
+
 
 # How many re-reads?
 change(PacFIN.SBLY.bds.04.Aug.2020)
