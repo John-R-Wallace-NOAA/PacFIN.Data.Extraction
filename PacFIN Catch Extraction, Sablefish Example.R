@@ -215,7 +215,7 @@ save(SABL.Research.Catch.05.May.2019, file = 'SABL.Research.Catch.05.May.2019.RD
 rm(SPID)  # Old in PacFIN R working directory
 
 change(SABL.CompFT.05.May.2019[!(SABL.CompFT.05.May.2019$REMOVAL_TYPE %in% "R"), ])
-PacFIN.SABL.Catch.INPFC.05.May.2019 <- aggregate(list(CATCH.KG = CATCH.LBS/2.2046), list(COUNCIL = COUNCIL, DAHL_SECTOR = DAHL_SECTOR, YEAR = YEAR, PERIOD = PERIOD, SPID = SPID, ARID = INPFC_ARID, 
+PacFIN.SABL.Catch.INPFC.05.May.2019 <- aggregate(list(CATCH.KG = CATCH.LBS/2.20462), list(COUNCIL = COUNCIL, DAHL_SECTOR = DAHL_SECTOR, YEAR = YEAR, PERIOD = PERIOD, SPID = SPID, ARID = INPFC_ARID, 
                                           GRID = GRID, GRGROUP = GRGROUP, PCID = W_O_C_Port_Groups), sum, na.rm=T)
 PacFIN.SABL.Catch.INPFC.05.May.2019 <- sort.f(PacFIN.SABL.Catch.INPFC.05.May.2019, c('YEAR', 'PERIOD', 'ARID', 'GRID', 'PCID'))
 
