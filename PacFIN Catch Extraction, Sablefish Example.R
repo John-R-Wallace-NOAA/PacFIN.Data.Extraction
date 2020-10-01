@@ -148,64 +148,56 @@ Table(SABL.CompFT.05.May.2019$SPID, SABL.CompFT.05.May.2019$YEAR, SABL.CompFT.05
         2014  2015  2016  2017  2018  2019
   SABL  3410  3567  3865  4694  4402   200
 
-
-  
   
 save(SABL.CompFT.05.May.2019, file = 'SABL.CompFT.05.May.2019.RData')
 
 
-# Fleet breakdown including research and tribal catch ( Fleet type: limited entry 'LE', open access 'OA', tribal indian 'TI', research 'R', unknown 'XX' )
+# Create research and tribal data frame
+change(SABL.CompFT.05.May.2019)
+SABL.Research.Tribal.Catch.05.May.2019 <- aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, FLEET, AGID), sum, na.rm=T)
+save(SABL.Research.Tribal.Catch.05.May.2019, file = 'SABL.Research.Tribal.Catch.05.May.2019.RData')
+r(SABL.Research.Tribal.Catch.05.May.2019, 2)
+
+    YEAR FLEET AGID Catch.mt
+1   1994    LE    C  1960.49
+2   1995    LE    C  2345.01
+...
+222 2019    OA    W    45.56
+223 2020    OA    W    24.14
+224 1990     R    W     0.28
+225 1997     R    W     0.21
+226 1999     R    W     0.45
+227 2000     R    W    13.92
+228 2001     R    W     0.32
+229 2006     R    W     0.72
+230 2007     R    W     0.36
+231 2008     R    W     0.59
+232 2014     R    W     0.02
+233 2016     R    W     0.27
+234 2019     R    W     1.30
+235 1981    TI    W     0.00
+236 1983    TI    W     0.02
+237 1984    TI    W     0.09
+...
+
+
+# Here is how 'Fleet' compares to 'Removal type' 
+   # Fleet type: limited entry 'LE', open access 'OA', tribal indian 'TI', research 'R', unknown 'XX' 
+   # Removal type: Commercial (Non-EFP) 'C', Commercial(Direct Sales) 'D', Exempted fishing permit(EFP) 'E', Other 'O', Personal use 'P', Research 'R', Unknown 'U'
+   
+Table(SABL.CompFT.05.May.2019$FLEET, SABL.CompFT.05.May.2019$REMOVAL_TYPE)
+    
+          C      D      E      O      P      R      U   <NA>
+  LE 713816    284  10319      0   3398      4      5    118
+  OA 178355     52     31     28   1158      0     17      3
+  R       0      0      0      0      0   3756      0      0
+  TI  54882      0      0      2    330      4      0      0
+  XX 427757     56      0     41      6      0      0      0
+
+
+# Fleet breakdown including research and tribal catch
    # - Tribal catch is included but not separable in a 'sc' type table.
    # - I would not assume this is all the research catch and would ask the Region what they have.
-
-change(SABL.CompFT.05.May.2019)
-SABL.Research.Catch.05.May.2019 <- agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, FLEET), sum, na.rm=T), Print=F)
-r(SABL.Research.Catch.05.May.2019, 2)
-save(SABL.Research.Catch.05.May.2019, file = 'SABL.Research.Catch.05.May.2019.RData')
-         TI       XX      R      LE     OA
-1981   0.00 11418.89     NA      NA     NA
-1982     NA 18627.05     NA      NA     NA
-1983   0.02 14651.72     NA      NA     NA
-1984   0.09 14014.95     NA      NA     NA
-1985   0.11 14132.19     NA      NA     NA
-1986   0.88 13149.43     NA      NA     NA
-1987   3.43 12598.01     NA      NA     NA
-1988   6.65 10737.06     NA      NA     NA
-1989 130.10 10154.34     NA      NA     NA
-1990 215.90  8849.22   0.28      NA     NA
-1991 299.16  9201.54     NA      NA     NA
-1992 344.16  9016.91     NA      NA     NA
-1993 321.56  7824.87     NA      NA     NA
-1994 309.34       NA     NA 6606.69 662.51
-1995 769.34       NA   0.14 6526.30 618.99
-1996 853.53       NA     NA 6781.86 681.57
-1997 805.17       NA   0.93 6604.55 532.47
-1998 444.85       NA  11.16 3759.19 168.81
-1999 710.44       NA  26.35 5627.82 277.89
-2000 705.70       NA  25.21 5106.68 443.56
-2001 658.69       NA   5.97 4545.35 426.24
-2002 436.59       NA   5.29 2956.96 399.64
-2003 602.46       NA 100.55 4114.99 601.89
-2004 710.08       NA   2.42 4555.69 487.84
-2005 699.84       NA   4.89 4582.29 921.31
-2006 669.45       NA   3.25 4720.51 805.76
-2007 516.32       NA   3.09 4253.46 471.96
-2008 526.48       NA   2.40 4778.52 564.60
-2009 639.48       NA   0.65 5626.14 932.08
-2010 582.68       NA   0.63 5280.93 967.81
-2011 535.72       NA   1.56 5299.98 583.58
-2012 583.51       NA  11.15 4376.13 328.65
-2013 364.07       NA   7.94 3563.40 204.94
-2014 437.30       NA   4.79 3689.62 294.60
-2015 513.73       NA  21.15 4204.51 431.61
-2016 577.39       NA  12.85 4425.80 397.12
-2017 508.33       NA   2.94 4561.49 468.05
-2018 434.78       NA  27.24 4326.32 417.72
-2019     NA       NA     NA  682.77 270.59
-
-
-
-
 
 # ------------------------------------------- INPFC sc table -----------------------------------------------------------------------------------------------------------------------
 
@@ -389,10 +381,5 @@ r(agg.table(aggregate(list(Catch.mt = CATCH.LBS/2204.62), List(YEAR, REMOVAL_TYP
 2017  5488.273     NA 5.223  0.064   2.940    NA 44.316
 2018  5126.120     NA 4.202  0.008  27.243 0.268 48.218
 2019   953.076     NA 0.253  0.012      NA    NA  0.015
-
-
-
-
-
 
 
