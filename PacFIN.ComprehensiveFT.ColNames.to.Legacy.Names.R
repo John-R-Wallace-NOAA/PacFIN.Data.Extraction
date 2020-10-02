@@ -31,9 +31,9 @@ PacFIN.ComprehensiveFT.ColNames.to.Legacy.Names <- function(CompFT) {
       Codes
   }
    
-  ' # End functions'
+  ' # --- End functions ---  '
   
-  ' # Conversion table  '
+  ' # --- Conversion table ---  '
 
   ' # Same column name (so no need to convert): FTID  '
   ' # RWT_LBS historically converted to CATCH.LBS in the SQL code, so here ROUND_WEIGHT_LBS is converted to CATCH.LBS  '
