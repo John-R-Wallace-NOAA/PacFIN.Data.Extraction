@@ -1,5 +1,5 @@
 
-Convert.PacFIN.ComprehensiveFT.ColNames.to.Legacy.Names <- function(CompFT) {
+PacFIN.ComprehensiveFT.ColNames.to.Legacy.Names <- function(CompFT) {
 
   ' # --- Functions from John Wallace's toolbox: https://github.com/John-R-Wallace-NOAA/JRWToolBox ---- ' 
  
