@@ -5,6 +5,8 @@
 # 'COUNCIL' in the vdrfd SQL code is from the 'ar' table
 # 'GRGROUP' was matched from the gr (gear) table and now is renamed from 'PACFIN_GROUP_GEAR_CODE'
 
+library(JRWToolBox)
+
 nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
 
                       Comp_FT                                vdrfd
