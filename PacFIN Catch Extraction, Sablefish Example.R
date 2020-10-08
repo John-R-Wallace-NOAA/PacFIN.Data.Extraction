@@ -44,9 +44,9 @@ AR_COUNCIL_P <- renum(ar[ar$COUNCIL %in% 'P',])
 
 # Only the created 'INPFC_PSMFC_AREA_GROUP %in% PSMFC' gets exculsively the more finer areas of PSMFC.
 # (Old but still correct: This will now allow a mapping between ARID to INPFC_PSMFC_AREA_GROUP which could be renamed to ARID for a foo sc table)
-# Last 14 rows of the AR_COUNCIL_P table are PSMFC
+# Last 15 rows of the AR_COUNCIL_P table are PSMFC
 AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP <- "INPFC"
-AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP[AR_COUNCIL_P$NAME %in%  c("1A", "1B", "MNTREY BAY", "1E", "1C", "2A", "2B", "2C", "2E", "2F", "2D", "3A", "3B", "3C-S")] <- "PSMFC"  
+AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP[AR_COUNCIL_P$NAME %in%  c("UP","1A", "1B", "MNTREY BAY", "1E", "1C", "2A", "2B", "2C", "2E", "2F", "2D", "3A", "3B", "3C-S")] <- "PSMFC"  
 AR_COUNCIL_P
 
 # COUNCIL_CODE = 'P'; with research catch included
