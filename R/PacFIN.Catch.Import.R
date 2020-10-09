@@ -1,4 +1,4 @@
-PacFIN.Catch.Import <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = PacFIN.Login, PWD = PacFIN.PW, verbose = TRUE, addColsWithLegacyNames = TRUE, viewCode = FALSE) {
+PacFIN.Catch.Import <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = PacFIN.Login, PWD = PacFIN.PW, verbose = TRUE, addColsWithLegacyNames = TRUE, returnCode = FALSE) {
 
     # -------- Import Main Function --------
     sourceFunctionURL <- function(URL) {
@@ -10,13 +10,15 @@ PacFIN.Catch.Import <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = PacF
        source(File.ASCII)
     }
     
-    '  # To view the PacFIN.Catch.Extraction() function: On the command line run sourceFunctionURL() above, Run the line below, Type "PacFIN.Catch.Extraction", and hit Enter.  '
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/R/PacFIN.Catch.Extraction.R")
     
-    if(viewCode)
+    
+    if(returnCode)
        return(PacFIN.Catch.Extraction)
-    if(!viewCode)
+       
+    if(!returnCode)
        PacFIN.Catch.Extraction(SpeciesCodeName = SpeciesCodeName, UID = UID, PWD = PWD, verbose = verbose, addColsWithLegacyNames = addColsWithLegacyNames)
     
 }   
     
+
