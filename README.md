@@ -13,7 +13,7 @@ To not be prompted for your username and password first set:
      UID <- "username"
      PWD <- "myPacFIN password"
      
-Thanks to my rgit package's sourceFunctionURL(), neither PacFIN.Catch.Extraction() nor the wrapper function PacFIN.Catch.Import() need my toolbox package installed (you will need internet access):
+Thanks to my rgit package's sourceFunctionURL(), neither PacFIN.Catch.Extraction() nor the wrapper function PacFIN.Catch.Import() need my toolbox package installed:
 
 
     PacFIN.Petrale.Catch.List.8.Oct.2020 <- PacFIN.Catch.Extraction("('PTRL', 'PTR1')")
