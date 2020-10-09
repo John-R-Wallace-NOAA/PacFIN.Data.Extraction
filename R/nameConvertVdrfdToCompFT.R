@@ -13,6 +13,7 @@ nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
                    COUNCIL_CODE                             COUNCIL
                    AGENCY_CODE                              AGID
                    LANDING_YEAR                             YEAR
+                   LANDING_MONTH                            PERIOD
                    LANDING_DATE                             TDATE
                    PACFIN_SPECIES_CODE                      SPID
                    PARTICIPATION_GROUP_CODE                 PARGRP
