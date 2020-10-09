@@ -180,10 +180,14 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = 
    
     '  # %ino% preserves the order when using matching operators unlike %in%. See my entry on Stack Overflow: '
     '  #  https://stackoverflow.com/questions/10586652/r-preserve-order-when-using-matching-operators-in  '
+    '  # RWT_LBS was historically converted to CATCH.LBS in the SQL code, so here ROUND_WEIGHT_LBS is converted to CATCH.LBS  ' 
     
       for(i in (1:nrow(nameConvertVdrfdToCompFT))[nameConvertVdrfdToCompFT$Comp_FT %ino% names(CompFT)])   
 
          CompFT[nameConvertVdrfdToCompFT[i, 2]] <- CompFT[nameConvertVdrfdToCompFT[i, 1]]
+         
+      CompFT$CATCH.LBS <- CompFT$ROUND_WEIGHT_MTONS * 2204.62262
+      CompFT$LWT_LBS <- CompFT$LANDED_WEIGHT_MTONS * 2204.62262
   }
    
   invisible(list(CompFT = CompFT, PacFIN.INPFC.Summary.Catch = PacFIN.INPFC.Summary.Catch, PacFIN.PSMFC.Summary.Catch = PacFIN.PSMFC.Summary.Catch, 

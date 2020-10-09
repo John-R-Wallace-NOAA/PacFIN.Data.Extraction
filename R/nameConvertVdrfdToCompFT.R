@@ -5,9 +5,20 @@
 # 'COUNCIL' in the vdrfd SQL code is from the 'ar' table
 # 'GRGROUP' was matched from the gr (gear) table and now is renamed from 'PACFIN_GROUP_GEAR_CODE'
 
-library(JRWToolBox)
+# -------- Import utility Functions --------
 
-nameConvertVdrfdToCompFT <- JRWToolBox::scanIn("
+sourceFunctionURL <- function(URL) {
+     ' # For more functionality, see gitAFile() in the rgit package ( https://github.com/John-R-Wallace-NOAA/rgit ) which includes gitPush() and git() '
+     require(RCurl)
+     File.ASCII <- tempfile()
+     on.exit(file.remove(File.ASCII))
+     writeLines(paste(readLines(textConnection(RCurl::getURL(URL))), collapse = "\n"), File.ASCII)
+     source(File.ASCII)
+}
+
+sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/scanIn.R")
+
+nameConvertVdrfdToCompFT <- scanIn("
 
                       Comp_FT                                vdrfd
                    COUNCIL_CODE                             COUNCIL
