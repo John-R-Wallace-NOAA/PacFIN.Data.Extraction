@@ -1,5 +1,5 @@
 
-PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = PacFIN.Login, PWD = PacFIN.PW, verbose = TRUE, addColsWithLegacyNames = TRUE) {
+PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = PacFIN.Login, PWD = PacFIN.PW, verbose = TRUE, addColsWithLegacyNames = TRUE) {
 
     # -------- Import utility Functions --------
     sourceFunctionURL <- function(URL) {
@@ -8,23 +8,22 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = 
        File.ASCII <- tempfile()
        on.exit(file.remove(File.ASCII))
        writeLines(paste(readLines(textConnection(RCurl::getURL(URL))), collapse = "\n"), File.ASCII)
-       source(File.ASCII)
+       source(File.ASCII, local = parent.env(environment()))
     }
     
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/import.sql.R")
-    sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/scanIn.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/recode.simple.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/agg.table.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/r.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/match.f.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/Table.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/sort.f.R")
-    sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/recode.simple.R")
+    sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/ino.R") 
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/R/nameConvertVdrfdToCompFT.R")
- 
- 
+    
+    
    #  -------- Check species info  --------
-   if(verbose) {
+   if(verbose & UID == "wallacej") {
       sp <- import.sql("Select * from pacfin.sp", dsn="PacFIN", uid= UID,  pwd = PWD)
       print(sp[grep(substr(SpeciesCodeName, 3, 5),  sp$SPID), 1:7])
    }
@@ -180,7 +179,7 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('PTRL', 'PTR1')", UID = 
    
     '  # %ino% preserves the order when using matching operators unlike %in%. See my entry on Stack Overflow: '
     '  #  https://stackoverflow.com/questions/10586652/r-preserve-order-when-using-matching-operators-in  '
-    '  # RWT_LBS was historically converted to CATCH.LBS in the SQL code, so here ROUND_WEIGHT_LBS legacy name is CATCH.LBS  ' 
+    '  # RWT_LBS was historically converted to CATCH.LBS in the SQL code, so here ROUND_WEIGHT_LBS is converted to CATCH.LBS  ' 
     
       for(i in (1:nrow(nameConvertVdrfdToCompFT))[nameConvertVdrfdToCompFT$Comp_FT %ino% names(CompFT)])   
 
