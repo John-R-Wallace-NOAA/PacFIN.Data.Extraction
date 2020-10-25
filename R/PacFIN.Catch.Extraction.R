@@ -1,5 +1,24 @@
-
-PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = PacFIN.Login, PWD = PacFIN.PW, verbose = TRUE, addColsWithLegacyNames = TRUE) {
+#' PacFIN Catch Extraction
+#'
+#' Extract commercial fisheries catch data from fish tickets supplied by fish processing plants the fish was delivered to. This data is archived in the PacFIN (https://pacfin.psmfc.org/) database.
+#'
+#' @param PACFIN_SPECIES_CODE A character vector of PacFIN species code or codes. For species with a nominal category use, e.g.: PACFIN_SPECIES_CODE = "('PTRL', 'PTR1')".
+#' Otherwise, for major species that are always separated out in the catch use: e.g.: PACFIN_SPECIES_CODE = "'SABL'". 
+#' @param PacFIN_Common_Name A character vector of PacFIN species common name used only for checking for a nominal species ID. The function will stop after the species codes are printed.
+#' @param UID A character vector of for the PacFIN login. The default is 'PacFIN.Login', which can be set prior to running this function.
+#' @param PWD A character vector of for the PacFIN password. The default is 'PacFIN.PW', which can be set prior to running this function.
+#' @param minYr The minimum year for which data is to be extracted.
+#' @param maxYr The maximum year for which data is to be extracted.
+#' @param verbose A logical object. When TRUE, verbose output will be printed. When FALSE, only differences and ratios of INPFC and PSMFC areas will be printed. The default is TRUE. 
+#' @param addColsWithLegacyNames When TRUE, historically used columns will be copied and given legacy names, mostly from the 'vdrfd' PacFIN table. The default is currently TRUE. 
+#'
+#' @author John R. Wallace
+#' @export
+#' @return An R list with the following data frames: 'CompFT' contains the comprehensive Fish Ticket information; PacFIN.INPFC.Summary.Catch' is catch summed over INPFC areas by year, agency and port;
+#' 'PacFIN.PSMFC.Summary.Catch' is catch summed over PSMFC areas by year, agency and port; Catch.mt.by.Agency.Year.Fleet is catch summarized by agency, year, and fleet, 'Tribal.Catch.mt.by.Year.Gear'
+#' is tribal catch data summarized by year and gear type.
+#' 
+PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", PacFIN_Common_Name = NULL, UID = PacFIN.Login, PWD = PacFIN.PW, minYr = 1900, maxYr = 2100, verbose = TRUE, addColsWithLegacyNames = TRUE) {
 
     # -------- Import utility Functions --------
     sourceFunctionURL <- function(URL) {
@@ -11,6 +30,8 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
        source(File.ASCII, local = parent.env(environment()))
     }
     
+    sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/printf.R")
+    sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/catf.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/import.sql.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/recode.simple.R")
     sourceFunctionURL("https://raw.githubusercontent.com/John-R-Wallace-NOAA/JRWToolBox/master/R/agg.table.R")
@@ -23,9 +44,24 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
     
     
    #  -------- Check species info  --------
+   
+   
+   if(!is.null(PacFIN_Common_Name) & UID == "wallacej") {
+      sp <- import.sql("Select * from pacfin.sp", dsn = "PacFIN", uid = UID,  pwd = PWD)
+      printf(sp[grep(casefold(PacFIN_Common_Name, upper = TRUE),  sp$CNAME), 1:7])
+      stop("\n\n--- Just checking for a nominal species ID using the PacFIN common name. ---\n\n")
+   }   
+   
    if(verbose & UID == "wallacej") {
-      sp <- import.sql("Select * from pacfin.sp", dsn="PacFIN", uid= UID,  pwd = PWD)
-      print(sp[grep(substr(SpeciesCodeName, 3, 5),  sp$SPID), 1:7])
+      if(verbose) {
+         catf("\nChecking for nominal species names using the first 3 letters of the SPID listed first in the PACFIN_SPECIES_CODE argument\n")
+         catf("\nIn rare cases this doesn't work to find the nominal species ID.\n\n")
+      }    
+      sp <- import.sql("Select * from pacfin.sp", dsn = "PacFIN", uid = UID,  pwd = PWD)
+      if(nchar(PACFIN_SPECIES_CODE) <= 6)
+        printf(sp[grep(substr(PACFIN_SPECIES_CODE, 2, 4),  sp$SPID), 1:7])
+      else
+        printf(sp[grep(substr(PACFIN_SPECIES_CODE, 3, 5),  sp$SPID), 1:7])
    }
    
    # -------- Data from the Comprehensive_FT table --------
@@ -35,24 +71,23 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
    
    
    # COUNCIL_CODE = 'P'; with research catch included
-   # For species with a nominal category use, e.g.:  SpeciesCodeName = "('PTRL', 'PTR1')" which gives < PACFIN_SPECIES_CODE = any ('PTRL', 'PTR1') > below, otherwise use: SpeciesCodeName = "'SABL'"
+   # For species with a nominal category use, e.g.: PACFIN_SPECIES_CODE = "('PTRL', 'PTR1')" (which gives the code: < PACFIN_SPECIES_CODE = any ('PTRL', 'PTR1') > below), otherwise use: PACFIN_SPECIES_CODE = "'SABL'"
    if(verbose) 
-      cat("\nImporting data from PacFIN\n\n")
+      catf("\nImporting data from PacFIN\n\n")
       
    CompFT <- import.sql(
-           "Select COUNCIL_CODE, AGENCY_CODE, DAHL_GROUNDFISH_CODE, INPFC_AREA_TYPE_CODE, LANDING_YEAR, LANDING_MONTH, LANDING_DATE, FTID, PARTICIPATION_GROUP_CODE, 
-                  PACFIN_CATCH_AREA_CODE, ORIG_PACFIN_CATCH_AREA_CODE, PACFIN_PORT_CODE, FLEET_CODE, VESSEL_ID, PACFIN_GEAR_CODE, IS_IFQ_LANDING, REMOVAL_TYPE_CODE, 
-                  CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, 
-                  PACFIN_GROUP_GEAR_CODE, ROUND_WEIGHT_MTONS, LANDED_WEIGHT_MTONS                         
-             from pacfin_marts.Comprehensive_FT 
-            where PACFIN_SPECIES_CODE = any &sp 
-              and COUNCIL_CODE = 'P' 
-              and AGENCY_CODE in ('W','O','C')", "&sp", SpeciesCodeName, dsn="PacFIN", uid=UID, pwd=PWD)
-   
-   # Convert to the old style short names
-   # names(CompFT) <- recode.simple(names(CompFT), nameConvertVdrfdToCompFT)
-   
-   
+      "Select COUNCIL_CODE, AGENCY_CODE, DAHL_GROUNDFISH_CODE, INPFC_AREA_TYPE_CODE, LANDING_YEAR, LANDING_MONTH, LANDING_DATE, FTID, PARTICIPATION_GROUP_CODE, 
+             PACFIN_CATCH_AREA_CODE, ORIG_PACFIN_CATCH_AREA_CODE, PACFIN_PORT_CODE, FLEET_CODE, VESSEL_ID, PACFIN_GEAR_CODE, IS_IFQ_LANDING, REMOVAL_TYPE_CODE, 
+             CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, 
+             PACFIN_GROUP_GEAR_CODE, ROUND_WEIGHT_MTONS, LANDED_WEIGHT_MTONS                         
+        from pacfin_marts.Comprehensive_FT 
+       where PACFIN_SPECIES_CODE = any &sp 
+         and COUNCIL_CODE = 'P' 
+         and AGENCY_CODE in ('W','O','C')
+         and landing_year between &beginyr and &endyr",
+    c("&sp", "&beginyr", "&endyr"), c(PACFIN_SPECIES_CODE, minYr, maxYr), dsn="PacFIN", uid=UID, pwd=PWD)
+  
+  
    # Create W_O_C_Port_Groups
    CompFT$W_O_C_Port_Groups <- CompFT$AGENCY_CODE
    CompFT$W_O_C_Port_Groups[CompFT$AGENCY_CODE %in% 'W'] <- "AWA"
@@ -68,33 +103,32 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
      
    if(verbose) {
    
-     print(Table(CompFT$INPFC_AREA_TYPE_CODE, CompFT$PACFIN_CATCH_AREA_CODE))
+     printf(Table(CompFT$INPFC_AREA_TYPE_CODE, CompFT$PACFIN_CATCH_AREA_CODE))
      
-     print(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$W_O_C_Port_Groups))
+     printf(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$W_O_C_Port_Groups))
    
-     print(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$LANDING_YEAR))
+     printf(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$LANDING_YEAR))
    
-     print(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$LANDING_YEAR, CompFT$AGENCY_CODE))
+     printf(Table(CompFT$PACFIN_SPECIES_CODE, CompFT$LANDING_YEAR, CompFT$AGENCY_CODE))
      
      agg.table(aggregate(list(ROUND_WEIGHT_MTONS = CompFT$ROUND_WEIGHT_MTONS) , CompFT[, c('LANDING_YEAR', 'FLEET_CODE')], sum, na.rm = TRUE)) # Print = TRUE by default
      
-     print(r(Catch.mt.by.Agency.Year.Fleet[1:4, ], 2))
+     printf(r(Catch.mt.by.Agency.Year.Fleet[1:4, ], 2))
      
-     print(r(Tribal.Catch.mt.by.Year.Gear[1:4, ], 2))
+     printf(r(Tribal.Catch.mt.by.Year.Gear[1:4, ], 2))
      
      # PACFIN_CATCH_AREA_CODE by LANDING_YEAR by AGENCY_CODE - shows where the differences in the INPFC and PSMFC areas are.
-     print(Table(CompFT$PACFIN_CATCH_AREA_CODE, CompFT$LANDING_YEAR, CompFT$AGENCY_CODE))
+     printf(Table(CompFT$PACFIN_CATCH_AREA_CODE, CompFT$LANDING_YEAR, CompFT$AGENCY_CODE))
    
      # Research catch by year and removal type - compare with FLEET removal
-     print(r(agg.table(aggregate(CompFT$ROUND_WEIGHT_MTONS, CompFT[, c('LANDING_YEAR', 'REMOVAL_TYPE_CODE')], sum, na.rm = TRUE), Print = FALSE), 3))
+     printf(r(agg.table(aggregate(CompFT$ROUND_WEIGHT_MTONS, CompFT[, c('LANDING_YEAR', 'REMOVAL_TYPE_CODE')], sum, na.rm = TRUE), Print = FALSE), 3))
      
      # Here is how 'Fleet' compares to 'Removal type' 
        # Fleet type: limited entry 'LE', open access 'OA', tribal indian 'TI', research 'R', unknown 'XX' 
        # Removal type: Commercial (Non-EFP) 'C', Commercial(Direct Sales) 'D', Exempted fishing permit(EFP) 'E', Other 'O', Personal use 'P', Research 'R', Unknown 'U'
     
-     cat('\nFLEET_CODE by REMOVAL_TYPE_CODE\n\n')
-     print(Table(CompFT$FLEET_CODE, CompFT$REMOVAL_TYPE_CODE))
-  
+     catf('\nFLEET_CODE by REMOVAL_TYPE_CODE\n\n')
+     printf(Table(CompFT$FLEET_CODE, CompFT$REMOVAL_TYPE_CODE))
   }   
    
    # Fleet breakdown including research and tribal catch
@@ -111,33 +145,36 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
    # ***** This change in names is for the comparison below - the summary catch (sc) PacFIN has this strangeness ****
    names(CompFT.INPFC)[(1:length(names(CompFT.INPFC)))[names(CompFT.INPFC) == "INPFC_AREA_TYPE_CODE"]] <- 'PACFIN_CATCH_AREA_CODE'
    CompFT.INPFC$PACFIN_PORT_CODE <- CompFT.INPFC$W_O_C_Port_Groups
-   PacFIN.INPFC.Summary.Catch <- aggregate(list(ROUND_WEIGHT_MTONS = CompFT.INPFC$ROUND_WEIGHT_MTONS), CompFT.INPFC[, c('COUNCIL_CODE', 'DAHL_GROUNDFISH_CODE', 'LANDING_YEAR', 'LANDING_MONTH', 'PACFIN_SPECIES_CODE', 'PACFIN_CATCH_AREA_CODE', 
-                                                  'PACFIN_GEAR_CODE', 'PACFIN_GROUP_GEAR_CODE', 'PACFIN_PORT_CODE')], sum, na.rm = TRUE)
+   PacFIN.INPFC.Summary.Catch <- aggregate(list(ROUND_WEIGHT_MTONS = CompFT.INPFC$ROUND_WEIGHT_MTONS), CompFT.INPFC[, c('COUNCIL_CODE', 'DAHL_GROUNDFISH_CODE', 'LANDING_YEAR', 'LANDING_MONTH', 
+                                                         'PACFIN_SPECIES_CODE', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_GROUP_GEAR_CODE', 'PACFIN_PORT_CODE')], sum, na.rm = TRUE)
                                              
    PacFIN.INPFC.Summary.Catch <- sort.f(PacFIN.INPFC.Summary.Catch, c('LANDING_YEAR', 'LANDING_MONTH', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_PORT_CODE'))
    
-   SC.INPFC.agg <- agg.table(aggregate(list(Catch.mt = PacFIN.INPFC.Summary.Catch$ROUND_WEIGHT_MTONS), list(LANDING_YEAR = PacFIN.INPFC.Summary.Catch$LANDING_YEAR, PACFIN_PORT_CODE = PacFIN.INPFC.Summary.Catch$PACFIN_PORT_CODE), sum, na.rm = TRUE), Print = FALSE)
+   SC.INPFC.agg <- agg.table(aggregate(list(Catch.mt = PacFIN.INPFC.Summary.Catch$ROUND_WEIGHT_MTONS), list(LANDING_YEAR = PacFIN.INPFC.Summary.Catch$LANDING_YEAR, 
+                                                         PACFIN_PORT_CODE = PacFIN.INPFC.Summary.Catch$PACFIN_PORT_CODE), sum, na.rm = TRUE), Print = FALSE)
    SC.INPFC.agg[is.na(SC.INPFC.agg)] <- 0
   
    # ------------------------------------------- PSMFC Summary Catch Table ---------------------------------------------------------------- 
       
    CompFT.PSMFC <- CompFT[!(CompFT$REMOVAL_TYPE_CODE %in% "R") & CompFT$PACFIN_CATCH_AREA_CODE %in% c("UP","1A", "1B", "MNTREY BAY", "1E", "1C", "2A", "2B", "2C", "2E", "2F", "2D", "3A", "3B", "3C-S"), ]
    CompFT.PSMFC$PACFIN_PORT_CODE <- CompFT.PSMFC$W_O_C_Port_Groups
-   PacFIN.PSMFC.Summary.Catch <- aggregate(list(ROUND_WEIGHT_MTONS = CompFT.PSMFC$ROUND_WEIGHT_MTONS), 
-             CompFT.PSMFC[, c('COUNCIL_CODE', 'DAHL_GROUNDFISH_CODE', 'LANDING_YEAR', 'LANDING_MONTH', 'PACFIN_SPECIES_CODE', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_GROUP_GEAR_CODE', 'PACFIN_PORT_CODE')], sum, na.rm = TRUE)
+   PacFIN.PSMFC.Summary.Catch <- aggregate(list(ROUND_WEIGHT_MTONS = CompFT.PSMFC$ROUND_WEIGHT_MTONS), CompFT.PSMFC[, c('COUNCIL_CODE', 'DAHL_GROUNDFISH_CODE', 'LANDING_YEAR', 'LANDING_MONTH',
+                                                         'PACFIN_SPECIES_CODE', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_GROUP_GEAR_CODE', 'PACFIN_PORT_CODE')], sum, na.rm = TRUE)
+                    
    PacFIN.PSMFC.Summary.Catch <- sort.f(PacFIN.PSMFC.Summary.Catch, c('LANDING_YEAR', 'LANDING_MONTH', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_PORT_CODE'))
    
-   SC.PSMFC.agg <- agg.table(aggregate(list(Catch.mt = PacFIN.PSMFC.Summary.Catch$ROUND_WEIGHT_MTONS), list(LANDING_YEAR = PacFIN.PSMFC.Summary.Catch$LANDING_YEAR, PACFIN_PORT_CODE = PacFIN.PSMFC.Summary.Catch$PACFIN_PORT_CODE), sum, na.rm = TRUE), Print = FALSE)
+   SC.PSMFC.agg <- agg.table(aggregate(list(Catch.mt = PacFIN.PSMFC.Summary.Catch$ROUND_WEIGHT_MTONS), list(LANDING_YEAR = PacFIN.PSMFC.Summary.Catch$LANDING_YEAR, 
+                                                                PACFIN_PORT_CODE = PacFIN.PSMFC.Summary.Catch$PACFIN_PORT_CODE), sum, na.rm = TRUE), Print = FALSE)
    SC.PSMFC.agg[is.na(SC.PSMFC.agg)] <- 0
    
    
    if(verbose) {
    
-      print(r(SC.INPFC.agg, 3))
-      print(Table(PacFIN.INPFC.Summary.Catch$PACFIN_CATCH_AREA_CODE, PacFIN.INPFC.Summary.Catch$PACFIN_PORT_CODE))
+      printf(r(SC.INPFC.agg, 3))
+      printf(Table(PacFIN.INPFC.Summary.Catch$PACFIN_CATCH_AREA_CODE, PacFIN.INPFC.Summary.Catch$PACFIN_PORT_CODE))
       
-      print(r(SC.PSMFC.agg, 3))
-      print(Table(PacFIN.PSMFC.Summary.Catch$PACFIN_CATCH_AREA_CODE, PacFIN.PSMFC.Summary.Catch$PACFIN_PORT_CODE))
+      printf(r(SC.PSMFC.agg, 3))
+      printf(Table(PacFIN.PSMFC.Summary.Catch$PACFIN_CATCH_AREA_CODE, PacFIN.PSMFC.Summary.Catch$PACFIN_PORT_CODE))
    } 
       
    # ----------------- Comparison of PSMFC sc table to INPFC sc table ----------------------------- 
@@ -150,9 +187,9 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
    
    if(verbose) {
    
-      print(SC.INPFC.agg) # Make sure the ordering is correct
-      cat("\n\n")
-      print(SC.PSMFC.agg)
+      printf(SC.INPFC.agg) # Make sure the ordering is correct
+      catf("\n\n")
+      printf(SC.PSMFC.agg)
    }
    
    
@@ -172,8 +209,8 @@ PacFIN.Catch.Extraction <- function(SpeciesCodeName = "('CNRY','CNR1')", UID = P
    # Tmp.Diff[is.na(Tmp.Diff )] <- 0
    Diff.and.Ratio <- cbind(Tmp.Diff, Diff.and.Ratio[,12:15]) # unsupported matrix index in replacement, so need temp file
    
-   cat("\nDifference and ratio of INPFC and PSMFC areas\n\n")
-   print(r(Diff.and.Ratio, 2))
+   catf("\nDifference and ratio of INPFC and PSMFC areas\n\n")
+   printf(r(Diff.and.Ratio, 2))
    
    if(addColsWithLegacyNames) {
    
