@@ -1,8 +1,7 @@
 
 PacFIN.BDS.Extraction <-  function(SPID = "'PTRL'", UID = PacFIN.Login, PWD = PacFIN.PW, dsn = "PacFIN", minYr = 1900, maxYr = 2100, 
              PacFIN.Catch.Dahl = NULL, addColsWithLegacyNames = TRUE) {
-
-
+	
     # -------- Import utility Functions --------
     sourceFunctionURL <- function(URL) {
        ' # For more functionality, see gitAFile() in the rgit package ( https://github.com/John-R-Wallace-NOAA/rgit ) which includes gitPush() and git() '
