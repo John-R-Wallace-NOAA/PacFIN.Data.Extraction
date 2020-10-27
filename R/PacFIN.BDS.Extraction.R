@@ -1,4 +1,30 @@
-
+#' PacFIN Biological Data Sample (BDS) Extraction
+#'
+#' Extract commercial fisheries BDS data recorded by port samplers deployed at fish processing plants. This data is archived in the Comprehensive_BDS_Comm  
+#' table contained within the PacFIN (https://pacfin.psmfc.org/) database.
+#'
+#' @param PACFIN_SPECIES_CODE A character vector for the main PacFIN species code of a species e.g.: PACFIN_SPECIES_CODE = "'SABL'".  
+#' (Nominal species codes are not used in BDS.)
+#' @param UID A character vector of for the PacFIN login. The default is 'PacFIN.Login', which can be set prior to running this function.
+#' @param PWD A character vector of for the PacFIN password. The default is 'PacFIN.PW', which can be set prior to running this function.
+#' @param minYr The minimum year for which data is to be extracted.
+#' @param maxYr The maximum year for which data is to be extracted.
+#' @param verbose When TRUE (the default), verbose output will be printed.
+#' @param PacFIN.Catch.Dahl An R data frame with FTID, catch, and Dahl sector information for the species given in the PACFIN_SPECIES_CODE argument.
+#' This is normally supplied via the CompFT data frame in the output R list from the PacFIN.Catch.Extraction() function run using the same species.
+#' The Dahl sector information will be matched onto the BDS data using FTID. 
+#' @param addColsWithLegacyNames When TRUE, historically used columns will be copied and given legacy names from tables used before the creation of the 
+#' Comprehensive_BDS_Comm table. The default is currently TRUE. 
+#'
+#' @author John R. Wallace
+#' @export
+#' @return An R data frame containing BDS information for the species given in the PACFIN_SPECIES_CODE argument.
+#' @examples
+#' PacFIN.Login <- "jonesj" 
+#' PacFIN.PW <- "????????"   
+#' CNRY.Catch <- PacFIN.Catch.Extraction("('CNRY','CNR1')", minYr = 2015, maxYr = 2017)
+#' CNRY.BDS <- PacFIN.BDS.Extraction("'CNRY'", minYr = 2015, maxYr = 2017, PacFIN.Catch.Dahl = CNRY.Catch$CompFT, verbose = FALSE)
+#"
 PacFIN.BDS.Extraction <- function(PACFIN_SPECIES_CODE = "'CNRY'", UID = PacFIN.Login, PWD = PacFIN.PW, minYr = 1900, maxYr = 2100, 
              verbose = TRUE, PacFIN.Catch.Dahl = NULL, addColsWithLegacyNames = TRUE) {
 
