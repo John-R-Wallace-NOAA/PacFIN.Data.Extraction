@@ -1,0 +1,9 @@
+Package: PacFIN_Data_Extraction
+Type: Package
+Title: What the package does (short line)
+Version: 0.8
+Date: 2020-10-26
+Author: John Wallace (John.Wallace@noaa.gov)
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
