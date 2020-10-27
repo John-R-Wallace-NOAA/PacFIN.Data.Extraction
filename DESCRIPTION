@@ -1,4 +1,4 @@
-Package: PacFIN_Data_Extraction
+Package: PacFIN.Data.Extraction
 Type: Package
 Title: What the package does (short line)
 Version: 0.8
