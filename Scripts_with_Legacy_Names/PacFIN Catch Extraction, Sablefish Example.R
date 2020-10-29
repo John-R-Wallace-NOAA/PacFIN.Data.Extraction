@@ -1,9 +1,10 @@
 
 # Download into your working directory and view this script in R with:
-rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/PacFIN Catch Extraction, Sablefish Example.R', type = "script", File = 'PacFIN Catch Extraction, Sablefish Example.R', show = TRUE)
+rgit::gitAFile('John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Scripts_with_Legacy_Names/PacFIN Catch Extraction, Sablefish Example.R', type = "script", 
+               File = 'PacFIN Catch Extraction, Sablefish Example.R', show = TRUE)
 
 # If you have copied and updated gitEdit() with your favorite editor, then download and insert this script into your editor with:
-gitEdit('PacFIN Catch Extraction, Sablefish Example.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/')
+gitEdit('PacFIN Catch Extraction, Sablefish Example.R', 'John-R-Wallace-NOAA/PacFIN-Data-Extraction/master/Scripts_with_Legacy_Names/')
 
 
 # -------- PacFIN login and password  --------
