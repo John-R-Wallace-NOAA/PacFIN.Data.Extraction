@@ -46,7 +46,7 @@ AR_COUNCIL_P <- renum(ar[ar$COUNCIL %in% 'P',])
 # (Old but still correct: This will now allow a mapping between ARID to INPFC_PSMFC_AREA_GROUP which could be renamed to ARID for a foo sc table)
 # Last 15 rows of the AR_COUNCIL_P table are PSMFC
 AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP <- "INPFC"
-# "UNK-PSMFC" will be matched with "UP" and "3C-S" will be matched with "3S" in the matching below and both will be labeled with as PSMFC (line 72 below) 
+# "UNK-PSMFC" will be matched with "UP", "3C-S" will be matched with "3S", and "MNTREY BAY" will be matched with "1D" in the matching below and both will be labeled with as PSMFC (line 72 below) 
 AR_COUNCIL_P$INPFC_PSMFC_AREA_GROUP[AR_COUNCIL_P$NAME %in%  c("UNK-PSMFC","1A", "1B", "MNTREY BAY", "1E", "1C", "2A", "2B", "2C", "2E", "2F", "2D", "3A", "3B", "3C-S")] <- "PSMFC"  
 AR_COUNCIL_P
 
