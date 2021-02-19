@@ -137,9 +137,10 @@ PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", Pac
      printf(Table(CompFT$FLEET_CODE, CompFT$REMOVAL_TYPE_CODE))
   }   
    
-   # Fleet breakdown including research and tribal catch
-      # - Tribal catch is included but not separable in a 'sc' type table.
+   # Fleet breakdown by INPFC and PSMFC areas, including tribal catch but not research  (Fleet type: limited entry 'LE', open access 'OA', tribal indian 'TI', research 'R', unknown 'XX' )
+      # - Tribal catch is included but not separable in a 'sc' type table (this is legacy from PacFIN's 'sc' table (really an Oracle view)
       # - I would not assume this is all the research catch and would ask the Region what they have.
+   
    
    # ------------------------------------------- INPFC sc table ----------------------------------------------------------------
    
