@@ -1,3 +1,11 @@
+## Federal Fishing Areas
+
+# WA, OR, CA
+
+https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/PSMFC%20Areas%20(Brian%20Culver%2C%20WDFW).pdf
+
+
+
 ## State Fishing Areas on the Web
 
 #### California Dept of Fish and Wildlife
