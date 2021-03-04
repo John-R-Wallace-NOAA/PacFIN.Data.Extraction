@@ -8,6 +8,10 @@ https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishin
 
 ### WA, OR
 
+https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/WA%20OR%20Coast%3B%20INFPC_Area.png
+
+
+
 
 ## State Fishing Areas on the Web
 
