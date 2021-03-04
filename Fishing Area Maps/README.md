@@ -1,4 +1,4 @@
-## International Fishing Areas 
+## International Fishing Areas of the Northeastern Pacific Ocean
 
 https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/NOAA_Tech_Memo_F_slash_NWC-101_Fig_1.jpg
 
