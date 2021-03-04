@@ -26,7 +26,7 @@ https://apps.wildlife.ca.gov/MarineLogs/Content/Cpfv/images/central_fishing_bloc
 
 https://apps.wildlife.ca.gov/MarineLogs/Content/Cpfv/images/north_fishing_blocks.jpg
 
-from: https://apps.wildlife.ca.gov/marinelogs/cpfv/app/trainingtools
+These are linked from: https://apps.wildlife.ca.gov/marinelogs/cpfv/app/trainingtools
 
 Sport Fishing: https://wildlife.ca.gov/Fishing/Ocean/Regulations/Fishing-Map
 
