@@ -2,7 +2,7 @@
 
 https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/NOAA_Tech_Memo_F_slash_NWC-101_Fig_1.jpg
 
-From Sandra McDevitt's 1986 Sablefish catch report: https://repository.library.noaa.gov/view/noaa/5701/noaa_5701_DS1.pdf?
+From Sandra McDevitt's 1986 Sablefish catch report: https://repository.library.noaa.gov/view/noaa/5701/
 
 ## Federal Fishing Areas
 
