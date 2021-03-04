@@ -10,6 +10,8 @@ https://apps.wildlife.ca.gov/MarineLogs/Content/Cpfv/images/north_fishing_blocks
 
 from: https://apps.wildlife.ca.gov/marinelogs/cpfv/app/trainingtools
 
+Sport Fishing: https://wildlife.ca.gov/Fishing/Ocean/Regulations/Fishing-Map
+
 
 ### Oregon Dept of Fish and Wildlife
 
