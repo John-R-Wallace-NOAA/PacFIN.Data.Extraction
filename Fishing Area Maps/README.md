@@ -12,6 +12,7 @@ INFPC: https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master
 
 INFPC, PSFMC: https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/WA%2C%20OR%20Coast%3B%20INFPC%2C%20PSFMC%20Areas.png
 
+INFPC, PSFMC, WA State: https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/WA%2C%20OR%20Coast%3B%20%20INFPC%2C%20PSFMC%2C%20WA%20State%20Areas.png
 
 
 
