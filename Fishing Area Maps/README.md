@@ -1,9 +1,12 @@
 ## Federal Fishing Areas
 
-# WA, OR, CA
+### WA, OR, CA
 
 https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/PSMFC%20Areas%20(Brian%20Culver%2C%20WDFW).pdf
 
+https://github.com/John-R-Wallace-NOAA/PacFIN.Data.Extraction/blob/master/Fishing%20Area%20Maps/INPFC%20Areas.pdf
+
+### WA, OR
 
 
 ## State Fishing Areas on the Web
