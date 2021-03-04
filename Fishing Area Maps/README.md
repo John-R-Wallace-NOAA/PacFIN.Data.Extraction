@@ -41,3 +41,24 @@ https://www.dfw.state.or.us/fish/commercial/docs/marine_reserves/logbook_grid_ch
 https://wdfw.wa.gov/sites/default/files/2019-02/2015_catch_area_map.jpg
 
 See Figure 4 here: https://wdfw.wa.gov/sites/default/files/publications/01754/wdfw01754.pdf
+
+Crab Fishing Areas: https://wdfw.wa.gov/news/puget-sound-recreational-crab-seasons-kick-july-4-most-areas-areas-around-tacoma-south-puget
+
+
+Note: PacFIN's Comprehensive BDS table column 'PSMFC_CATCH_AREA_CODE' contains codes such as"
+
+     1,59A2
+     1,60A2
+     1,61 
+     
+     2,59A2
+     2,60A
+     2,60A1
+     2,60A2
+           
+     3,59A      
+     3,59A1
+     
+Theses codes appear to be Crab Fishing Areas.
+
+
