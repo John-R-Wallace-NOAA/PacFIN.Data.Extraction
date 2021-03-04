@@ -67,7 +67,7 @@ Note: PacFIN's Comprehensive BDS table column 'PSMFC_CATCH_AREA_CODE' contains W
      
 The ordinal number before the comma is consistent with the Crab Fishing Areas.
 
-PacFIN's ( https://pacfin.psmfc.org/ )area table (ar) with COUNCIL = 'P':
+PacFIN's ( https://pacfin.psmfc.org/ ) area table (ar) with COUNCIL = 'P':
 
         ARID ARGROUP COUNCIL       NAME                                                               DESCRIPTION ENTERED ARORDER TYPE SUMMARIZED INPUTALLOWED INPFC_ARID LAST_UPDATED
      1    66      VN       P         66                                    47 20' N TO 50 30' N EXCLUDING AREA 72    <NA>     320    4       TRUE         TRUE         VN         <NA>
