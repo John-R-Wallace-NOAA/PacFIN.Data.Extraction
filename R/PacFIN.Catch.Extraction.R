@@ -84,7 +84,7 @@ PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", Pac
    CompFT <- import.sql(
       "Select COUNCIL_CODE, AGENCY_CODE, DAHL_GROUNDFISH_CODE, INPFC_AREA_TYPE_CODE, LANDING_YEAR, LANDING_MONTH, LANDING_DATE, FTID, PARTICIPATION_GROUP_CODE, 
              PACFIN_CATCH_AREA_CODE, ORIG_PACFIN_CATCH_AREA_CODE, PACFIN_PORT_CODE, FLEET_CODE, VESSEL_ID, PACFIN_GEAR_CODE, IS_IFQ_LANDING, REMOVAL_TYPE_CODE, 
-             CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, 
+             CONDITION_CODE, DISPOSITION_CODE, EXVESSEL_REVENUE, PACFIN_SPECIES_CODE, NOMINAL_TO_ACTUAL_PACFIN_SPECIES_CODE, SPECIES_CODE, IS_SPECIES_COMP_USED, GRADE_CODE, GRADE_NAME, 
              PACFIN_GROUP_GEAR_CODE, ROUND_WEIGHT_MTONS, LANDED_WEIGHT_MTONS                         
         from pacfin_marts.Comprehensive_FT 
        where PACFIN_SPECIES_CODE = any &sp 
@@ -191,14 +191,22 @@ PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", Pac
    
    names(SC.PSMFC.agg) <- paste0(names(SC.PSMFC.agg), ".PSMFC")
    SC.PSMFC.agg <- SC.PSMFC.agg[,order(names(SC.PSMFC.agg))]
-   
+     
+   if(!any(colnames(SC.PSMFC.agg) %in% 'ACA.PSMFC'))
+         SC.PSMFC.agg$ACA.PSMFC <- 0
+       
+   if(!any(colnames(SC.PSMFC.agg) %in% 'AOR.PSMFC'))
+         SC.PSMFC.agg$AOR.PSMFC <- 0
+         
+   if(!any(colnames(SC.PSMFC.agg) %in% 'AWA.PSMFC'))  # Only have seen WA missing the PSMFC data
+         SC.PSMFC.agg$AWA.PSMFC <- 0   
+
    if(verbose) {
    
       printf(SC.INPFC.agg) # Make sure the ordering is correct
       catf("\n\n")
       printf(SC.PSMFC.agg)
-   }
-   
+   }         
    
    # Early in the year, the last year of data may currently have only one of the area types and hence the number of rows is different
    if(nrow(SC.PSMFC.agg) !=  nrow(SC.INPFC.agg)) {
@@ -236,3 +244,4 @@ PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", Pac
   invisible(list(CompFT = CompFT, PacFIN.INPFC.Summary.Catch = PacFIN.INPFC.Summary.Catch, PacFIN.PSMFC.Summary.Catch = PacFIN.PSMFC.Summary.Catch, 
                    Catch.mt.by.Agency.Year.Fleet = Catch.mt.by.Agency.Year.Fleet, Tribal.Catch.mt.by.Year.Gear = Tribal.Catch.mt.by.Year.Gear))
 }
+
