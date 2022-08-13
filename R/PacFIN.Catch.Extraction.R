@@ -148,10 +148,14 @@ PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", Pac
    # change(CompFT[!(CompFT$REMOVAL_TYPE_CODE %in% "R") & CompFT$INPFC_PSMFC_AREA_GROUP %in% 'INPFC',])  <<== !!! WRONG !!! see PACFIN_CATCH_AREA_CODE = INPFC_AREA_TYPE_CODE below
      
    CompFT.INPFC <- CompFT[!(CompFT$REMOVAL_TYPE_CODE %in% "R"), ]
-   # Can not use grep() below since ORIG_PACFIN_CATCH_AREA_CODE is matched also
-   # ***** This change in names is for the comparison below - the summary catch (sc) PacFIN has this strangeness ****
+    
+   # Can not use grep() below since ORIG_PACFIN_CATCH_AREA_CODE is also matched
    names(CompFT.INPFC)[(1:length(names(CompFT.INPFC)))[names(CompFT.INPFC) == "INPFC_AREA_TYPE_CODE"]] <- 'PACFIN_CATCH_AREA_CODE'
+    
+   # **** This change in names is for the comparison below ****
+   # **** The summary catch (sc) PacFIN has this strangeness of retaining the name PACFIN_PORT_CODE when it only contains WA, OR, and CA port groups. **** 
    CompFT.INPFC$PACFIN_PORT_CODE <- CompFT.INPFC$W_O_C_Port_Groups
+    
    PacFIN.INPFC.Summary.Catch <- aggregate(list(ROUND_WEIGHT_MTONS = CompFT.INPFC$ROUND_WEIGHT_MTONS), CompFT.INPFC[, c('COUNCIL_CODE', 'DAHL_GROUNDFISH_CODE', 'LANDING_YEAR', 'LANDING_MONTH', 
                                                          'PACFIN_SPECIES_CODE', 'PACFIN_CATCH_AREA_CODE', 'PACFIN_GEAR_CODE', 'PACFIN_GROUP_GEAR_CODE', 'PACFIN_PORT_CODE')], sum, na.rm = TRUE)
                                              
