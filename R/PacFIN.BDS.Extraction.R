@@ -160,7 +160,7 @@ PacFIN.BDS.Extraction <- function(PACFIN_SPECIES_CODE = "'CNRY'", UID = PacFIN.L
     }
     
     # Cleanup
-    if(default.stringsAsFactors()) 
+    if(options()$stringsAsFactors) 
           warning("Default strings as factors is set to TRUE.")
     
     bds_fish <- data.frame(lapply(bds_fish, function(x) if(is.character(x)) {x[is.na(x)] <- ""; x}  else x))
