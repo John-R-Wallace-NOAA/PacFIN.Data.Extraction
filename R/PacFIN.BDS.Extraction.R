@@ -14,7 +14,7 @@
 #' This is normally supplied via the CompFT data frame in the output R list from the PacFIN.Catch.Extraction() function run using the same species.
 #' The Dahl sector information will be matched onto the BDS data using FTID. 
 #' @param addColsWithLegacyNames When TRUE, historically used columns will be copied and given legacy names from tables used before the creation of the 
-#' Comprehensive_BDS_Comm table. The default is currently TRUE. 
+#' Comprehensive_BDS_Comm table. The default is now FALSE. 
 #'
 #' @author John R. Wallace
 #' @export
@@ -26,7 +26,7 @@
 #' CNRY.BDS <- PacFIN.BDS.Extraction("'CNRY'", minYr = 2015, maxYr = 2017, PacFIN.Catch.Dahl = CNRY.Catch$CompFT, verbose = FALSE)
 #"
 PacFIN.BDS.Extraction <- function(PACFIN_SPECIES_CODE = "'CNRY'", UID = PacFIN.Login, PWD = PacFIN.PW, minYr = 1900, maxYr = 2100, 
-             verbose = TRUE, PacFIN.Catch.Dahl = NULL, addColsWithLegacyNames = TRUE) {
+             verbose = TRUE, PacFIN.Catch.Dahl = NULL, addColsWithLegacyNames = FALSE) {
 
     # -------- Import utility Functions --------
     sourceFunctionURL <- function (URL) {
