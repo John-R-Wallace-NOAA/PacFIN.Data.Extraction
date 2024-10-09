@@ -11,7 +11,7 @@
 #' @param minYr The minimum year for which data is to be extracted.
 #' @param maxYr The maximum year for which data is to be extracted.
 #' @param verbose A logical object. When TRUE, verbose output will be printed. When FALSE, only differences and ratios of INPFC and PSMFC areas will be printed. The default is TRUE. 
-#' @param addColsWithLegacyNames When TRUE, historically used columns will be copied and given legacy names, mostly from the 'vdrfd' PacFIN table. The default is currently TRUE. 
+#' @param addColsWithLegacyNames When TRUE, historically used columns will be copied and given legacy names, mostly from the 'vdrfd' PacFIN table. The default is now FALSE. 
 #'
 #' @author John R. Wallace
 #' @export
@@ -24,7 +24,7 @@
 #' PacFIN.PTRL.Catch <- PacFIN.Catch.Extraction("('PTRL', 'PTR1')")
 #' PacFIN.SABL.Catch <- PacFIN.Catch.Extraction("'SABL'")
 #'
-PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", PacFIN_Common_Name = NULL, UID = PacFIN.Login, PWD = PacFIN.PW, minYr = 1900, maxYr = 2100, verbose = TRUE, addColsWithLegacyNames = TRUE) {
+PacFIN.Catch.Extraction <- function(PACFIN_SPECIES_CODE = "('CNRY','CNR1')", PacFIN_Common_Name = NULL, UID = PacFIN.Login, PWD = PacFIN.PW, minYr = 1900, maxYr = 2100, verbose = TRUE, addColsWithLegacyNames = FALSE) {
 
     sourceFunctionURL <- function (URL) {
         " # For more functionality, see gitAFile() in the rgit package ( https://github.com/John-R-Wallace-NOAA/rgit ) which includes gitPush() and git() "
